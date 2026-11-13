@@ -168,7 +168,7 @@ window.SITE = {
       date: "2026-11-18",
       heure: "19h30",
       type: "Rencontre",
-      titre: "Rencontre autour du Palais",
+      titre: "François-Henri Désérable à la librairie Masséna à Nice",
       lieu: "Librairie Masséna, 55 rue Gioffredo",
       ville: "Nice",
       url: ""
@@ -177,7 +177,7 @@ window.SITE = {
       date: "2026-11-17",
       heure: "18h30",
       type: "Rencontre",
-      titre: "Rencontre autour du Palais",
+      titre: "François-Henri Désérable à la librairie Autour d'un livre à Cannes",
       lieu: "Librairie Autour d'un livre, 17 rue Jean Jaurès",
       ville: "Cannes",
       url: ""
@@ -186,7 +186,7 @@ window.SITE = {
       date: "2026-11-14",
       heure: "11h",
       type: "Rencontre",
-      titre: "Rencontre autour du Palais",
+      titre: "François-Henri Désérable à la médiathèque des 4C à Lons-le-Saunier, en partenariat avec la librairie Guivel",
       lieu: "Médiathèque des 4C, 7 rue des Cordeliers",
       ville: "Lons-le-Saunier",
       url: ""

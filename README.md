@@ -26,3 +26,10 @@ Pour la photo de l'auteur, voir le commentaire dans `biographie.html`.
 Ouvrir `index.html` dans un navigateur, ou :
 
     python3 -m http.server 8000
+
+## Identité visuelle
+
+- `css/style.css` : mise en page et styles de base
+- `css/canadiens.css` : thème bleu-blanc-rouge (couleurs inspirées des Canadiens de Montréal),
+  polices Oswald (titres) + Cormorant Garamond (titres de livres, citations) + Inter (texte)
+- `css/fonts.css` + `fonts/` : polices hébergées sur le site (licence SIL OFL)

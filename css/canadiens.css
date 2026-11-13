@@ -1,0 +1,128 @@
+/*
+ * Identité visuelle « bleu-blanc-rouge », inspirée des couleurs des Canadiens de Montréal.
+ * - Oswald (titres, navigation, repères) : capitales condensées, esprit maillot de hockey.
+ * - Cormorant Garamond (titres de livres, citations) : l'ambiance littéraire.
+ * - Inter (texte courant).
+ * Ce fichier se charge après style.css et n'en surcharge que l'apparence.
+ */
+:root {
+  --bleu: #192168;
+  --bleu-nuit: #0f1546;
+  --rouge: #af1e2d;
+  --rouge-clair: #c8283a;
+  --blanc: #ffffff;
+
+  --papier: #f7f6f2;
+  --papier-2: #eceae3;
+  --encre: #141a3c;
+  --encre-douce: #50566f;
+  --filet: #d7d7de;
+  --accent: var(--rouge);
+
+  --display: "Oswald", "Arial Narrow", Impact, sans-serif;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Bande de maillot : rouge / blanc / bleu / blanc / rouge */
+  --bande: linear-gradient(180deg,
+    var(--rouge) 0 30%, var(--blanc) 30% 40%, var(--bleu) 40% 60%,
+    var(--blanc) 60% 70%, var(--rouge) 70% 100%);
+}
+
+body { background: var(--papier); color: var(--encre); }
+
+/* ---------- En-tête : bleu nuit + bande de maillot ---------- */
+.entete { background: var(--bleu); border-bottom: 0; }
+.entete::after { content: ""; display: block; height: 10px; background: var(--bande); }
+.logo { color: var(--blanc); font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; font-size: 1.45rem; }
+.logo em { font-family: var(--serif); font-style: italic; font-weight: 500; text-transform: none; letter-spacing: 0; font-size: 1.55rem; margin-right: 2px; }
+.logo span { color: var(--blanc); }
+.nav a { font-family: var(--display); font-weight: 500; font-size: .95rem; letter-spacing: .12em; color: rgba(255,255,255,.78); border-bottom-width: 3px; }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--blanc); border-color: var(--rouge-clair); }
+.burger { color: var(--blanc); }
+@media (max-width: 720px) {
+  .nav { background: var(--bleu); top: 86px; border-bottom: 0; }
+  .logo { font-size: 1.15rem; }
+  .logo em { font-size: 1.25rem; }
+}
+
+/* ---------- Titres ---------- */
+.page-titre .surtitre { font-family: var(--serif); font-style: italic; font-size: 1.25rem; letter-spacing: .02em; text-transform: none; color: var(--rouge); }
+.page-titre h1 { font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: .03em; color: var(--bleu); }
+.page-titre h1::after { content: ""; display: block; width: 64px; height: 4px; margin: 18px auto 0; background: var(--rouge); }
+.section-titre { border-bottom: 2px solid var(--bleu); }
+.section-titre h2, .agenda-bloc h2, .bio-texte h2 { font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--bleu); }
+.section-titre h2 { font-size: 1.9rem; }
+.lien-discret, .sommaire a, .compteur { font-family: var(--display); font-size: .9rem; letter-spacing: .12em; color: var(--rouge); }
+.sommaire a { padding: 4px 0; border-bottom: 2px solid transparent; }
+.sommaire a:hover { text-decoration: none; border-color: var(--rouge); }
+
+/* ---------- Carrousel ---------- */
+.carrousel { background: var(--bleu-nuit); }
+.carrousel::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 8px; background: var(--bande); z-index: 3; }
+.slide-fond::after { background: linear-gradient(90deg, rgba(15,21,70,.92) 0%, rgba(15,21,70,.62) 45%, rgba(15,21,70,.12) 100%); }
+.slide-kicker { font-family: var(--display); font-weight: 500; font-size: .9rem; letter-spacing: .16em; opacity: 1; }
+.slide-kicker::before { background: var(--rouge-clair); height: 3px; }
+.slide h2 { font-family: var(--serif); font-weight: 600; }
+.slide-prix { font-family: var(--display); font-size: .88rem; color: #ffd6da; }
+.carrousel .bouton { font-family: var(--display); font-weight: 500; font-size: .9rem; letter-spacing: .14em; background: var(--rouge); border-color: var(--rouge); color: var(--blanc); }
+.carrousel .bouton:hover { background: var(--blanc); border-color: var(--blanc); color: var(--bleu); }
+.carrousel-fleche { border-color: rgba(255,255,255,.5); }
+.carrousel-fleche:hover { background: var(--rouge); border-color: var(--rouge); }
+.carrousel-points { bottom: 30px; }
+.carrousel-points button[aria-current="true"] { background: var(--rouge-clair); }
+.slide-rencontres li { background: rgba(15,21,70,.45); border-color: rgba(255,255,255,.22); border-left: 4px solid var(--rouge); }
+.sr-date { font-family: var(--display); }
+.sr-date b { font-family: var(--display); font-weight: 600; }
+.sr-ville { font-family: var(--serif); }
+@media (max-width: 720px) {
+  .slide-fond::after { background: linear-gradient(0deg, rgba(15,21,70,.92) 0%, rgba(15,21,70,.6) 60%, rgba(15,21,70,.35) 100%); }
+}
+
+/* ---------- Livres ---------- */
+.colonne-livres .carte-livre h3, .carte-livre h3 { font-family: var(--serif); color: var(--encre); }
+.colonne-livres .meta, .carte-livre .meta { font-family: var(--display); font-size: .85rem; letter-spacing: .12em; color: var(--rouge); }
+.livre-detail .annee { font-family: var(--display); font-weight: 600; font-size: 1rem; letter-spacing: .14em; color: var(--rouge); }
+.livre-detail h2 { font-family: var(--serif); font-weight: 600; color: var(--bleu); }
+.livre-detail .infos { font-family: var(--display); font-size: .85rem; color: var(--encre-douce); }
+.livre-detail { border-top-color: var(--filet); }
+.prix-liste li::before, .biblio li::before { color: var(--rouge); }
+.badge { color: var(--rouge); }
+
+/* ---------- Citation (bandeau) ---------- */
+.bandeau { background: var(--bleu); color: var(--blanc); border: 0; position: relative; }
+.bandeau::before { content: ""; position: absolute; left: 0; right: 0; height: 8px; background: var(--bande); }
+.bandeau::before { top: 0; }
+.bandeau blockquote { color: var(--blanc); }
+.bandeau cite { font-family: var(--display); font-size: .85rem; letter-spacing: .16em; color: #ffd6da; }
+
+/* ---------- Agenda ---------- */
+.ev-date { border: 2px solid var(--bleu); background: var(--blanc); }
+.ev-jour { font-family: var(--display); font-weight: 600; color: var(--rouge); }
+.ev-mois { font-family: var(--display); color: var(--bleu); font-size: .78rem; }
+.ev-type { font-family: var(--display); font-size: .85rem; color: var(--rouge); }
+.evenement h3 { font-family: var(--serif); font-weight: 600; color: var(--bleu); }
+.evenement.passe .ev-date { border-color: var(--filet); }
+
+/* ---------- Biographie ---------- */
+.portrait { border-bottom: 8px solid transparent; border-image: var(--bande) 1; }
+.portrait::after { background: linear-gradient(to top, rgba(15,21,70,.75) 0%, rgba(15,21,70,0) 45%); }
+.portrait-legende small { font-family: var(--display); font-size: .8rem; }
+.bio-texte p.chapeau { color: var(--bleu); font-weight: 600; }
+.chrono { border-left: 2px solid var(--bleu); }
+.chrono li::before { left: -6px; border: 2px solid var(--rouge); background: var(--blanc); }
+.chrono .an { font-family: var(--display); font-weight: 600; font-size: 1.15rem; color: var(--rouge); }
+
+/* ---------- Presse & publications ---------- */
+.article .media { font-family: var(--display); font-weight: 600; font-size: .9rem; color: var(--bleu); }
+.article h2 { font-family: var(--serif); font-weight: 600; }
+.article .lire { font-family: var(--display); font-size: .85rem; color: var(--rouge); }
+.article .livre-lie { color: var(--rouge); }
+.biblio-titre { font-family: var(--serif); font-weight: 600; color: var(--bleu); }
+.biblio a { color: var(--rouge); }
+
+/* ---------- Pied de page ---------- */
+.pied { background: var(--bleu); color: rgba(255,255,255,.75); border-top: 0; position: relative; padding-top: 50px; }
+.pied::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--bande); }
+.pied a { color: var(--blanc); font-family: var(--display); letter-spacing: .1em; text-transform: uppercase; font-size: .85rem; }
+.pied a:hover { color: #ffd6da; }

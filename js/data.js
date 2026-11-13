@@ -13,7 +13,7 @@ window.SITE = {
       date: "2025",
       kicker: "Nouveau livre",
       titre: "Chagrin d'un chant inachevé",
-      texte: "Sur la route de Che Guevara : de Buenos Aires à Caracas, l'auteur reprend l'itinéraire du jeune Ernesto et d'Alberto Granado.",
+      texte: "Sur la route de Che Guevara : cinq mois à travers l'Amérique du Sud, sur l'itinéraire du voyage à motocyclette d'Ernesto Guevara et d'Alberto Granado.",
       lien: "romans.html#chagrin",
       theme: "terre",
       image: ""
@@ -58,7 +58,7 @@ window.SITE = {
       genre: "Récit",
       couleur: "#8a3b1f",
       image: "",
-      resume: "Soixante-dix ans après, l'auteur refait le voyage sud-américain du jeune Ernesto Guevara et d'Alberto Granado, de Buenos Aires à Caracas. Le titre vient d'une lettre du Che, qui l'empruntait lui-même à un vers du poète Nâzım Hikmet.",
+      resume: "Cinq mois à travers l'Amérique du Sud, à moto, en stop, en bateau, avec une seule règle : suivre l'itinéraire d'Alberto Granado et d'Ernesto « Che » Guevara lors de leur célèbre voyage à motocyclette, soixante-cinq ans plus tôt. Plutôt que de signer l'achat d'un appartement, l'auteur choisit la route, de l'Argentine au Venezuela. Le titre vient d'un vers du poète Nâzım Hikmet, cité par le Che dans une lettre.",
       prix: []
     },
     {
@@ -69,8 +69,8 @@ window.SITE = {
       editeur: "Gallimard",
       genre: "Récit de voyage",
       couleur: "#1f3a4d",
-      image: "",
-      resume: "À l'automne 2022, alors que l'Iran se soulève après la mort de Mahsa Amini, l'auteur traverse le pays de part en part. Récit de voyage dans les pas de Nicolas Bouvier et enquête sur un régime à bout de souffle, porté par une voix à la fois grave et pleine d'humour.",
+      image: "images/usure.jpg",
+      resume: "Fin 2022, au plus fort de la répression qui suit la mort de Mahsa Amini, l'auteur passe un mois et demi en Iran. Dans les pas de son modèle Nicolas Bouvier, il traverse le pays de Téhéran aux confins du Baloutchistan, à la rencontre d'un peuple chez qui la peur recule. Jusqu'à son arrestation par les Gardiens de la révolution et son expulsion. Le portrait d'une République islamique qui réprime son peuple dans le sang.",
       prix: ["Prix Montaigne 2024"]
     },
     {
@@ -80,8 +80,8 @@ window.SITE = {
       editeur: "Gallimard",
       genre: "Roman",
       couleur: "#6b1d2a",
-      image: "",
-      resume: "Une histoire d'amour fou, racontée sous la forme d'une enquête : Vasco, Tina, Edgar, un revolver et un carnet de poèmes. Un roman fluide, ironique et poétique, nourri de Verlaine et Rimbaud.",
+      image: "images/maitre.jpg",
+      resume: "Un écrivain est convoqué par un juge d'instruction : il connaît les détails d'une affaire. Quand Vasco a été arrêté, on a trouvé sur lui un revolver et un carnet de poèmes. En relisant ces poèmes, le narrateur raconte la passion de Vasco pour Tina, comédienne fantasque, partagée entre Edgar, le père de ses jumeaux qu'elle doit épouser, et Vasco, l'amant qui l'obsède. Une comédie dramatique entre poésie et roman policier, sous le signe de Verlaine et Rimbaud.",
       prix: ["Grand Prix du roman de l'Académie française 2021"]
     },
     {
@@ -91,8 +91,8 @@ window.SITE = {
       editeur: "Gallimard",
       genre: "Roman",
       couleur: "#3d4a2f",
-      image: "",
-      resume: "Dans La Promesse de l'aube, Romain Gary évoque un petit voisin de Vilnius, M. Piekielny, qui lui demandait de parler de lui « aux grands de ce monde ». De passage en Lituanie, l'auteur part sur ses traces : une enquête littéraire et une déclaration d'amour à Gary.",
+      image: "images/piekielny.jpg",
+      resume: "Dans La Promesse de l'aube, Romain Gary raconte comment un voisin de Wilno, un certain M. Piekielny, lui avait demandé, enfant, de prononcer son nom devant les grands de ce monde qu'il rencontrerait. Devenu résistant, diplomate et écrivain, Gary a tenu sa promesse. Un jour de mai, l'auteur se retrouve devant le numéro 16 de la rue Grande-Pohulanka, à Vilnius, et se demande qui était cet homme. Une enquête où se mêlent Gary, Piekielny et l'auteur lui-même.",
       prix: ["Finaliste du Prix du roman des étudiants France Culture – Télérama 2018"]
     },
     {
@@ -102,8 +102,8 @@ window.SITE = {
       editeur: "Gallimard",
       genre: "Roman",
       couleur: "#2b2b4a",
-      image: "",
-      resume: "La vie fulgurante d'Évariste Galois, génie des mathématiques, républicain ardent, mort en duel à vingt ans en 1832 après avoir jeté sur le papier, la nuit précédente, des idées qui allaient révolutionner l'algèbre.",
+      image: "images/evariste.jpg",
+      resume: "Évariste Galois découvre les mathématiques à quinze ans, les révolutionne à dix-huit et meurt en duel à vingt. Entre une enfance à Bourg-la-Reine et une adolescence républicaine et tumultueuse sous Louis-Philippe, le roman, en vingt chapitres comme ses vingt années, retrace la vie fulgurante de celui qu'on a appelé le « Rimbaud des mathématiques ».",
       prix: ["Prix des lecteurs L'Express – BFMTV"]
     },
     {
@@ -113,8 +113,8 @@ window.SITE = {
       editeur: "Gallimard",
       genre: "Récits",
       couleur: "#4a2b2b",
-      image: "",
-      resume: "Le premier livre de l'auteur : une suite de récits consacrés aux dernières heures de figures de la Révolution française promises à la guillotine. Le titre reprend les mots prêtés à Danton face au bourreau.",
+      image: "images/tete.jpg",
+      resume: "Paris, sous la Révolution. Charlotte Corday, Adam Lux, les Girondins, Danton, Marie-Antoinette, Robespierre, André Chénier… Dix récits, dix figures saisies dans les jours, les heures ou les minutes qui précèdent la chute de leur tête dans le panier du bourreau. Le titre reprend les derniers mots de Danton à l'exécuteur.",
       prix: []
     }
   ],

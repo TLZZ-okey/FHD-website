@@ -19,7 +19,7 @@
 
   // Couverture (image réelle si fournie, sinon couverture typographique)
   function couverture(l) {
-    if (l.image) return '<div class="couverture"><img src="' + esc(l.image) + '" alt="Couverture de ' + esc(l.titre) + '" loading="lazy"></div>';
+    if (l.image) return '<div class="couverture avec-image"><img src="' + esc(l.image) + '" alt="Couverture de ' + esc(l.titre) + '" loading="lazy"></div>';
     return '<div class="couverture" style="--c:' + esc(l.couleur) + '" role="img" aria-label="Couverture de ' + esc(l.titre) + '">' +
       '<div class="couv-auteur">' + esc(S.auteur) + '</div>' +
       '<div><div class="couv-titre">' + esc(l.titre) + '</div>' +

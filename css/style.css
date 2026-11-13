@@ -231,3 +231,7 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .carrousel-piste, .couverture { transition: none; }
 }
+
+/* Couverture avec image réelle */
+.couverture.avec-image { padding: 0; background: var(--papier-2); }
+.couverture.avec-image::before { content: none; }

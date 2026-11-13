@@ -261,3 +261,11 @@ a { color: inherit; }
 .section-titre + .agenda-liste .evenement:first-child { border-top: 0; padding-top: 0; }
 .evenement h3 a { text-decoration: none; background-image: linear-gradient(var(--accent), var(--accent)); background-size: 0 1px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .3s; }
 .evenement h3 a:hover { background-size: 100% 1px; }
+
+/* Carrousel : visuel à droite */
+.slide .conteneur.avec-visuel { display: flex; align-items: center; justify-content: space-between; gap: 48px; width: 100%; }
+.slide-visuel { position: relative; z-index: 1; height: 360px; width: auto; box-shadow: 0 24px 48px -16px rgba(0,0,0,.6); flex-shrink: 0; }
+.livre-detail .resume p { margin: 0 0 .9em; }
+@media (max-width: 720px) {
+  .slide-visuel { display: none; }
+}

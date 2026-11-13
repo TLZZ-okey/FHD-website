@@ -36,12 +36,14 @@
     piste.innerHTML = S.news.map(function (n, i) {
       var fond = n.image
         ? '<div class="slide-fond" style="background-image:url(\'' + esc(n.image) + '\')"></div>'
-        : '<div class="slide-fond theme-' + esc(n.theme) + '"></div><div class="slide-filigrane" aria-hidden="true">' + esc(n.titre.split(" ")[0]) + '</div>';
+        : '<div class="slide-fond theme-' + esc(n.theme) + '"></div>' + (n.visuel ? "" : '<div class="slide-filigrane" aria-hidden="true">' + esc(n.titre.split(" ")[0]) + '</div>');
       return '<article class="slide" aria-roledescription="diapositive" aria-label="' + (i + 1) + ' sur ' + S.news.length + '">' + fond +
-        '<div class="conteneur"><div class="slide-contenu">' +
+        '<div class="conteneur' + (n.visuel ? ' avec-visuel' : '') + '"><div class="slide-contenu">' +
         '<div class="slide-kicker">' + esc(n.kicker) + ' · ' + esc(n.date) + '</div>' +
         '<h2>' + esc(n.titre) + '</h2><p>' + esc(n.texte) + '</p>' +
-        '<a class="bouton" href="' + esc(n.lien) + '">En savoir plus</a></div></div></article>';
+        '<a class="bouton" href="' + esc(n.lien) + '">En savoir plus</a></div>' +
+        (n.visuel ? '<img class="slide-visuel" src="' + esc(n.visuel) + '" alt="">' : "") +
+        '</div></article>';
     }).join("");
     points.innerHTML = S.news.map(function (_, i) {
       return '<button type="button" aria-label="Aller à la diapositive ' + (i + 1) + '"></button>';
@@ -98,7 +100,7 @@
           '<h2>' + esc(l.titre) + '</h2>' +
           (l.sousTitre ? '<p class="sous-titre">' + esc(l.sousTitre) + '</p>' : "") +
           '<div class="infos">' + esc(l.genre) + ' · ' + esc(l.editeur) + '</div>' +
-          '<p class="resume">' + esc(l.resume) + '</p>' +
+          '<div class="resume">' + l.resume.split("\n").map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + '</div>' +
           (l.prix.length ? '<ul class="prix-liste">' + l.prix.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>" : "") +
           '</div></article>';
       }).join("");

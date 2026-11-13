@@ -3,6 +3,9 @@
  * Pour remplacer un visuel généré par une vraie image (couverture, photo),
  * déposez le fichier dans /images et renseignez le champ `image`
  * (ex. image: "images/chagrin.jpg").
+ * Dans le carrousel, le champ image remplit tout le fond ; le champ visuel affiche
+ * une image à droite du texte (ex. une couverture ou une affiche).
+ * Dans les résumés, chaque retour à la ligne crée un nouveau paragraphe.
  */
 window.SITE = {
   auteur: "François-Henri Désérable",
@@ -16,7 +19,8 @@ window.SITE = {
       texte: "Le jury du prix Renaudot, pour son centenaire, couronne Le Palais, grand roman d'aventures sur le vin. L'auteur dédie son prix aux vignerons.",
       lien: "romans.html#palais",
       theme: "vin",
-      image: ""
+      image: "",
+      visuel: "images/palais-illustration.jpg"
     },
     {
       date: "Novembre 2026",
@@ -34,7 +38,8 @@ window.SITE = {
       texte: "Sur la route de Che Guevara : cinq mois à travers l'Amérique du Sud, sur l'itinéraire du voyage à motocyclette d'Ernesto Guevara et d'Alberto Granado.",
       lien: "romans.html#chagrin",
       theme: "terre",
-      image: ""
+      image: "",
+      visuel: "images/chagrin.jpg"
     },
     {
       date: "2024",
@@ -74,8 +79,8 @@ window.SITE = {
       editeur: "Gallimard",
       genre: "Roman",
       couleur: "#5c1a33",
-      image: "",
-      resume: "Arun Kumar, orphelin des bidonvilles de New Delhi, est adopté à huit ans par un couple de restaurateurs de Beaune. Il se découvre un palais et une mémoire des arômes hors du commun, un don qu'il va mettre au service d'une vengeance. Des caves de Bourgogne aux Marquises et à Manhattan, un grand roman d'aventures sur le vin, portrait d'un génie hors-la-loi dont les crimes se dégustent, qui interroge ce qui fait la valeur d'un grand cru : le goût, le prix ou les histoires qu'on raconte.",
+      image: "images/palais.jpg",
+      resume: "Arun Kumar est doté d’un palais absolu — une mémoire des arômes si infaillible qu’elle confine au prodige. Ce don extraordinaire, il entend bien en faire l’instrument de sa revanche. Reste à découvrir comment. Et contre qui.\nDes bidonvilles de Delhi aux caves de Bourgogne, des îles Marquises aux tours de Manhattan, François-Henri Désérable signe avec Le Palais un grand roman d’aventures sur le vin, portrait d’un génie hors la loi dont les crimes se dégustent.",
       prix: ["Prix Renaudot 2026"]
     },
     {
@@ -86,8 +91,8 @@ window.SITE = {
       editeur: "Gallimard",
       genre: "Récit",
       couleur: "#8a3b1f",
-      image: "",
-      resume: "Cinq mois à travers l'Amérique du Sud, à moto, en stop, en bateau, avec une seule règle : suivre l'itinéraire d'Alberto Granado et d'Ernesto « Che » Guevara lors de leur célèbre voyage à motocyclette, soixante-cinq ans plus tôt. Plutôt que de signer l'achat d'un appartement, l'auteur choisit la route, de l'Argentine au Venezuela. Le titre vient d'un vers du poète Nâzım Hikmet, cité par le Che dans une lettre.",
+      image: "images/chagrin.jpg",
+      resume: "« Cet automne-là, les taux d’intérêt étaient en baisse, les prix de l’immobilier en hausse, ma famille, mes amis s’inquiétaient : est-ce qu’il n’était pas temps que j’investisse dans la pierre ? Avec un peu de chance et un banquier indulgent, je pouvais peut-être m’endetter sur trente ans (mon âge à l’époque). Je n’en avais ni les moyens ni l’envie. Signant un acte de vente, j’aurais eu la sensation de signer mon propre registre d’écrou — et de voir ma liberté circonscrite à quelques mètres carrés. Et puis un appartement, ça se meuble ; aux meubles, il faudrait toujours préférer son sac de voyage. »\nDe Buenos Aires à Caracas, François-Henri Désérable nous embarque dans une formidable traversée de l’Amérique du Sud. Cinq mois à moto, en stop, en bateau, avec une seule contrainte : emprunter l’itinéraire qui fut celui d’Alberto Granado et d’Ernesto « Che » Guevara, lors du fameux voyage à motocyclette, soixante-cinq ans plus tôt.",
       prix: []
     },
     {
@@ -99,7 +104,7 @@ window.SITE = {
       genre: "Récit de voyage",
       couleur: "#1f3a4d",
       image: "images/usure.jpg",
-      resume: "Fin 2022, au plus fort de la répression qui suit la mort de Mahsa Amini, l'auteur passe un mois et demi en Iran. Dans les pas de son modèle Nicolas Bouvier, il traverse le pays de Téhéran aux confins du Baloutchistan, à la rencontre d'un peuple chez qui la peur recule. Jusqu'à son arrestation par les Gardiens de la révolution et son expulsion. Le portrait d'une République islamique qui réprime son peuple dans le sang.",
+      resume: "« La peur était pour le peuple iranien une compagne de chaque instant, la moitié fidèle d’une vie. Les Iraniens vivaient avec dans la bouche le goût sablonneux de la peur. Seulement, depuis la mort de Mahsa Amini, la peur était mise en sourdine : elle s’effaçait au profit du courage. »\nFin 2022, au plus fort de la répression contre les manifestations qui suivent la mort de Mahsa Amini, François-Henri Désérable passe quarante jours en Iran, qu’il traverse de part en part, de Téhéran aux confins du Baloutchistan. Arrêté par les Gardiens de la révolution, sommé de quitter le pays, il en revient avec ce récit dans lequel il raconte l’usure d’un monde : celui d’une République islamique aux abois, qui réprime dans le sang les aspirations de son peuple.",
       prix: ["Prix Montaigne 2024"]
     },
     {
@@ -110,7 +115,7 @@ window.SITE = {
       genre: "Roman",
       couleur: "#6b1d2a",
       image: "images/maitre.jpg",
-      resume: "Un écrivain est convoqué par un juge d'instruction : il connaît les détails d'une affaire. Quand Vasco a été arrêté, on a trouvé sur lui un revolver et un carnet de poèmes. En relisant ces poèmes, le narrateur raconte la passion de Vasco pour Tina, comédienne fantasque, partagée entre Edgar, le père de ses jumeaux qu'elle doit épouser, et Vasco, l'amant qui l'obsède. Une comédie dramatique entre poésie et roman policier, sous le signe de Verlaine et Rimbaud.",
+      resume: "« Le cahier, c’était la première chose que m’avait montrée le juge, quand tout à l’heure j’étais entré dans son bureau. Sous la couverture souple et transparente, on pouvait lire au feutre noir : MON MAÎTRE ET MON VAINQUEUR.\nSur les pages suivantes, il y avait des poèmes. Voilà ce qu’on avait retrouvé sur Vasco : le revolver, un cahier noirci d’une vingtaine de poèmes et, plus tard, après expertise balistique, des résidus de poudre sur ses mains.\nVoilà ce qu’il en restait, j’ai pensé, de son histoire d’amour. »",
       prix: ["Grand Prix du roman de l'Académie française 2021"]
     },
     {
@@ -121,7 +126,7 @@ window.SITE = {
       genre: "Roman",
       couleur: "#3d4a2f",
       image: "images/piekielny.jpg",
-      resume: "Dans La Promesse de l'aube, Romain Gary raconte comment un voisin de Wilno, un certain M. Piekielny, lui avait demandé, enfant, de prononcer son nom devant les grands de ce monde qu'il rencontrerait. Devenu résistant, diplomate et écrivain, Gary a tenu sa promesse. Un jour de mai, l'auteur se retrouve devant le numéro 16 de la rue Grande-Pohulanka, à Vilnius, et se demande qui était cet homme. Une enquête où se mêlent Gary, Piekielny et l'auteur lui-même.",
+      resume: "« \"Quand tu rencontreras de grands personnages, des hommes importants, promets-moi de leur dire : au n° 16 de la rue Grande-Pohulanka, à Wilno, habitait M. Piekielny...\"\nQuand il fit la promesse à ce M. Piekielny, son voisin, qui ressemblait à \"une souris triste\", Roman Kacew était enfant. Devenu adulte, résistant, diplomate, écrivain sous le nom de Romain Gary, il s’en est toujours acquitté : \"Des estrades de l’ONU à l’Ambassade de Londres, du Palais Fédéral de Berne à l’Élysée, devant Charles de Gaulle et Vichinsky, devant les hauts dignitaires et les bâtisseurs pour mille ans, je n’ai jamais manqué de mentionner l’existence du petit homme\", raconte-t-il dans La promesse de l’aube, son autobiographie romancée.\nUn jour de mai, des hasards m’ont jeté devant le n° 16 de la rue Grande-Pohulanka. J’ai décidé, ce jour-là, de partir à la recherche d’un certain M. Piekielny. »",
       prix: ["Finaliste du Prix du roman des étudiants France Culture – Télérama 2018"]
     },
     {
@@ -132,7 +137,7 @@ window.SITE = {
       genre: "Roman",
       couleur: "#2b2b4a",
       image: "images/evariste.jpg",
-      resume: "Évariste Galois découvre les mathématiques à quinze ans, les révolutionne à dix-huit et meurt en duel à vingt. Entre une enfance à Bourg-la-Reine et une adolescence républicaine et tumultueuse sous Louis-Philippe, le roman, en vingt chapitres comme ses vingt années, retrace la vie fulgurante de celui qu'on a appelé le « Rimbaud des mathématiques ».",
+      resume: "À quinze ans, Évariste Galois découvre les mathématiques ; à dix-huit, il les révolutionne ; à vingt, il meurt en duel. Il a connu Raspail, Nerval, Dumas, Cauchy, les Trois Glorieuses et la prison, le miracle de la dernière nuit, l'amour et la mort à l'aube, sur le pré.\nC'est cette vie fulgurante, cette vie qui fut un crescendo tourmenté, au rythme marqué par le tambour de passions frénétiques, qui nous est ici racontée.",
       prix: ["Prix des lecteurs L'Express – BFMTV"]
     },
     {
@@ -143,7 +148,7 @@ window.SITE = {
       genre: "Récits",
       couleur: "#4a2b2b",
       image: "images/tete.jpg",
-      resume: "Paris, sous la Révolution. Charlotte Corday, Adam Lux, les Girondins, Danton, Marie-Antoinette, Robespierre, André Chénier… Dix récits, dix figures saisies dans les jours, les heures ou les minutes qui précèdent la chute de leur tête dans le panier du bourreau. Le titre reprend les derniers mots de Danton à l'exécuteur.",
+      resume: "Paris, pendant la Révolution.\nOn y croise Charlotte Corday, dans sa cellule, pendant qu’un élève de David achève son portrait ; Adam Lux, un allemand tombé amoureux d’elle dans des circonstances pour le moins inattendues ; les Girondins, la fameuse nuit de leur dernier banquet à la Conciergerie ; Danton, pendant son ultime voyage jusqu’à la place de la Révolution ; le plus grand esprit français du XVIIIᵉ siècle, qui nous apprend comment mourir avec élégance ; mais aussi Marie-Antoinette et Robespierre, le marquis de Lantenac et André Chénier.\nTous, dans les jours, les heures ou les minutes précédant la chute de leur tête dans le panier du bourreau.",
       prix: []
     }
   ],

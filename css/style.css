@@ -289,3 +289,32 @@ a { color: inherit; }
 .biblio-titre { font-family: var(--serif); font-size: 1.25rem; color: var(--encre); }
 .biblio-details { color: var(--encre-douce); }
 .biblio a { color: var(--accent); }
+
+/* ---------- Accueil : cartes livres en colonnes ---------- */
+.grille-livres { grid-template-columns: repeat(4, 1fr); gap: 28px; align-items: stretch; }
+.grille-livres .carte-livre { display: flex; }
+.carte-lien {
+  display: flex; flex-direction: column; width: 100%; text-decoration: none;
+  background: var(--blanc); border: 1px solid var(--filet);
+  box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 10px 24px -14px rgba(40,25,10,.3);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.carte-lien:hover { transform: translateY(-4px); box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 22px 36px -16px rgba(40,25,10,.4); }
+.carte-couv { background: var(--papier-2); padding: 24px 28px; border-bottom: 1px solid var(--filet); }
+.carte-couv .couverture { box-shadow: 0 10px 22px -10px rgba(40,25,10,.45); }
+.carte-lien:hover .couverture { transform: none; }
+.carte-corps { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
+.carte-corps .meta { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--encre-douce); }
+.grille-livres .carte-livre h3 { margin: 6px 0 4px; font-size: 1.35rem; }
+.carte-corps .badge { margin-top: 2px; }
+.carte-extrait { font-size: .9rem; color: var(--encre-douce); line-height: 1.55; margin: 12px 0 18px; }
+.carte-plus { margin-top: auto; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+@media (max-width: 960px) { .grille-livres { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) {
+  .grille-livres { grid-template-columns: 1fr; }
+  .carte-couv { padding: 24px 25%; }
+}
+@media (max-width: 560px) {
+  .section-titre { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .section-titre h2 { font-size: 1.9rem; }
+}

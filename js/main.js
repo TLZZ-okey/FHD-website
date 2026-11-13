@@ -78,13 +78,25 @@
     aller(0); demarrer();
   }
 
-  // ---------- Derniers livres (accueil) ----------
+  // ---------- Derniers livres (accueil) : cartes en colonnes ----------
+  function extrait(texte, max) {
+    var t = texte.split("\n")[0];
+    if (t.length <= max) return t;
+    t = t.slice(0, max);
+    return t.slice(0, t.lastIndexOf(" ")).replace(/[\s,;:—–-]+$/, "") + "…";
+  }
   var derniers = $("#derniers-livres");
   if (derniers) {
     derniers.innerHTML = S.livres.slice(0, 4).map(function (l) {
-      return '<a class="carte-livre" href="publications.html#' + esc(l.id) + '">' + couverture(l) +
-        '<h3>' + esc(l.titre) + '</h3><div class="meta">' + esc(l.genre) + ' · ' + l.annee + '</div>' +
-        (l.prix.length ? '<div class="badge">✦ ' + esc(l.prix[0]) + '</div>' : "") + '</a>';
+      return '<article class="carte-livre"><a class="carte-lien" href="publications.html#' + esc(l.id) + '">' +
+        '<div class="carte-couv">' + couverture(l) + '</div>' +
+        '<div class="carte-corps">' +
+        '<div class="meta">' + esc(l.genre) + ' · ' + l.annee + '</div>' +
+        '<h3>' + esc(l.titre) + '</h3>' +
+        (l.prix.length ? '<div class="badge">✦ ' + esc(l.prix[0]) + '</div>' : "") +
+        '<p class="carte-extrait">' + esc(extrait(l.resume, 150)) + '</p>' +
+        '<span class="carte-plus">Découvrir →</span>' +
+        '</div></a></article>';
     }).join("");
   }
 
@@ -106,28 +118,16 @@
   // ---------- Page Publications : livres ----------
   var catalogue = $("#catalogue");
   if (catalogue) {
-    var rendre = function (filtre) {
-      catalogue.innerHTML = S.livres.filter(function (l) {
-        return filtre === "tous" || (filtre === "romans" ? l.genre === "Roman" : l.genre !== "Roman");
-      }).map(function (l) {
-        return '<article class="livre-detail" id="' + esc(l.id) + '">' + couverture(l) + '<div>' +
-          '<div class="annee">' + l.annee + '</div>' +
-          '<h2>' + esc(l.titre) + '</h2>' +
-          (l.sousTitre ? '<p class="sous-titre">' + esc(l.sousTitre) + '</p>' : "") +
-          '<div class="infos">' + esc(l.genre) + ' · ' + esc(l.editeur) + '</div>' +
-          '<div class="resume">' + l.resume.split("\n").map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + '</div>' +
-          (l.prix.length ? '<ul class="prix-liste">' + l.prix.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>" : "") +
-          '</div></article>';
-      }).join("");
-    };
-    var boutons = document.querySelectorAll(".filtres button");
-    Array.prototype.forEach.call(boutons, function (b) {
-      b.addEventListener("click", function () {
-        Array.prototype.forEach.call(boutons, function (x) { x.setAttribute("aria-pressed", x === b); });
-        rendre(b.dataset.filtre);
-      });
-    });
-    rendre("tous");
+    catalogue.innerHTML = S.livres.map(function (l) {
+      return '<article class="livre-detail" id="' + esc(l.id) + '">' + couverture(l) + '<div>' +
+        '<div class="annee">' + l.annee + '</div>' +
+        '<h2>' + esc(l.titre) + '</h2>' +
+        (l.sousTitre ? '<p class="sous-titre">' + esc(l.sousTitre) + '</p>' : "") +
+        '<div class="infos">' + esc(l.genre) + ' · ' + esc(l.editeur) + '</div>' +
+        '<div class="resume">' + l.resume.split("\n").map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + '</div>' +
+        (l.prix.length ? '<ul class="prix-liste">' + l.prix.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>" : "") +
+        '</div></article>';
+    }).join("");
     if (location.hash) { var cible = document.getElementById(location.hash.slice(1)); if (cible) cible.scrollIntoView(); }
   }
 

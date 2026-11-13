@@ -127,7 +127,7 @@ window.SITE = {
       couleur: "#3d4a2f",
       image: "images/piekielny.jpg",
       resume: "« \"Quand tu rencontreras de grands personnages, des hommes importants, promets-moi de leur dire : au n° 16 de la rue Grande-Pohulanka, à Wilno, habitait M. Piekielny...\"\nQuand il fit la promesse à ce M. Piekielny, son voisin, qui ressemblait à \"une souris triste\", Roman Kacew était enfant. Devenu adulte, résistant, diplomate, écrivain sous le nom de Romain Gary, il s’en est toujours acquitté : \"Des estrades de l’ONU à l’Ambassade de Londres, du Palais Fédéral de Berne à l’Élysée, devant Charles de Gaulle et Vichinsky, devant les hauts dignitaires et les bâtisseurs pour mille ans, je n’ai jamais manqué de mentionner l’existence du petit homme\", raconte-t-il dans La promesse de l’aube, son autobiographie romancée.\nUn jour de mai, des hasards m’ont jeté devant le n° 16 de la rue Grande-Pohulanka. J’ai décidé, ce jour-là, de partir à la recherche d’un certain M. Piekielny. »",
-      prix: ["Finaliste du Prix du roman des étudiants France Culture – Télérama 2018"]
+      prix: ["Sélectionné pour les six grands prix de la rentrée 2017"]
     },
     {
       id: "evariste",
@@ -138,7 +138,7 @@ window.SITE = {
       couleur: "#2b2b4a",
       image: "images/evariste.jpg",
       resume: "À quinze ans, Évariste Galois découvre les mathématiques ; à dix-huit, il les révolutionne ; à vingt, il meurt en duel. Il a connu Raspail, Nerval, Dumas, Cauchy, les Trois Glorieuses et la prison, le miracle de la dernière nuit, l'amour et la mort à l'aube, sur le pré.\nC'est cette vie fulgurante, cette vie qui fut un crescendo tourmenté, au rythme marqué par le tambour de passions frénétiques, qui nous est ici racontée.",
-      prix: ["Prix des lecteurs L'Express – BFMTV"]
+      prix: ["Prix des lecteurs L'Express – BFMTV", "Prix de la biographie"]
     },
     {
       id: "tete",
@@ -149,7 +149,7 @@ window.SITE = {
       couleur: "#4a2b2b",
       image: "images/tete.jpg",
       resume: "Paris, pendant la Révolution.\nOn y croise Charlotte Corday, dans sa cellule, pendant qu’un élève de David achève son portrait ; Adam Lux, un allemand tombé amoureux d’elle dans des circonstances pour le moins inattendues ; les Girondins, la fameuse nuit de leur dernier banquet à la Conciergerie ; Danton, pendant son ultime voyage jusqu’à la place de la Révolution ; le plus grand esprit français du XVIIIᵉ siècle, qui nous apprend comment mourir avec élégance ; mais aussi Marie-Antoinette et Robespierre, le marquis de Lantenac et André Chénier.\nTous, dans les jours, les heures ou les minutes précédant la chute de leur tête dans le panier du bourreau.",
-      prix: []
+      prix: ["Prix de la Vocation"]
     }
   ],
 

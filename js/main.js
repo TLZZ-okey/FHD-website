@@ -81,8 +81,8 @@
         '<ul class="slide-rencontres">' + prochaines.map(function (e) {
           var d = e.date.split("-").map(Number);
           return '<li><span class="sr-date"><b>' + d[2] + '</b>' + MOIS_C[d[1] - 1] + '</span>' +
-            '<span class="sr-texte"><span class="sr-ville">' + esc(e.ville) + (e.heure ? ' · ' + esc(e.heure) : "") + '</span>' +
-            '<span class="sr-lieu">' + esc(e.lieu) + '</span></span></li>';
+            '<span class="sr-texte"><span class="sr-ville">' + esc(e.lieu) + '</span>' +
+            '<span class="sr-lieu">' + esc(e.ville) + (e.heure ? ' · ' + esc(e.heure) : "") + '</span></span></li>';
         }).join("") + '</ul>' +
         '<a class="bouton" href="agenda.html">Tout l\'agenda</a></div></div>';
     }
@@ -177,7 +177,7 @@
     return '<li class="evenement' + (passe ? " passe" : "") + '">' +
       '<div class="ev-date"><div class="ev-jour">' + d[2] + '</div><div class="ev-mois">' + MOIS[d[1] - 1] + ' ' + d[0] + '</div></div>' +
       '<div><div class="ev-type">' + esc(e.type) + (e.heure ? ' · ' + esc(e.heure) : "") + '</div>' +
-      '<h3>' + titre + '</h3><div class="ev-lieu">' + esc(e.lieu) + ' — ' + esc(e.ville) + '</div></div></li>';
+      '<h3>' + titre + '</h3><div class="ev-lieu">' + esc(e.lieu) + (e.adresse ? ', ' + esc(e.adresse) : "") + ' — ' + esc(e.ville) + '</div></div></li>';
   }
   var aujourdhui = new Date(); aujourdhui.setHours(0, 0, 0, 0);
   var estPasse = function (e) { return new Date(e.date + "T23:59:59") < aujourdhui; };

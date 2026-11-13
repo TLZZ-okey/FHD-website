@@ -162,14 +162,15 @@ window.SITE = {
     { titre: "« Sur les toits »", details: "nouvelle illustrée par Élis Wilk, Revue Décapage, [n° 48](http://revuedecapage.blogspot.fr/search/label/NUM%C3%89RO%2048), automne-hiver 2013." }
   ],
 
-  // Agenda : date au format AAAA-MM-JJ. Les dates passées sont classées automatiquement.
+  // Agenda : date au format AAAA-MM-JJ ; lieu = nom du lieu, adresse = facultative. Les dates passées sont classées automatiquement.
   agenda: [
     {
       date: "2026-11-18",
       heure: "19h30",
       type: "Rencontre",
       titre: "François-Henri Désérable à la librairie Masséna à Nice",
-      lieu: "Librairie Masséna, 55 rue Gioffredo",
+      lieu: "Librairie Masséna",
+      adresse: "55 rue Gioffredo",
       ville: "Nice",
       url: ""
     },
@@ -178,7 +179,8 @@ window.SITE = {
       heure: "18h30",
       type: "Rencontre",
       titre: "François-Henri Désérable à la librairie Autour d'un livre à Cannes",
-      lieu: "Librairie Autour d'un livre, 17 rue Jean Jaurès",
+      lieu: "Librairie Autour d'un livre",
+      adresse: "17 rue Jean Jaurès",
       ville: "Cannes",
       url: ""
     },
@@ -187,7 +189,8 @@ window.SITE = {
       heure: "11h",
       type: "Rencontre",
       titre: "François-Henri Désérable à la médiathèque des 4C à Lons-le-Saunier, en partenariat avec la librairie Guivel",
-      lieu: "Médiathèque des 4C, 7 rue des Cordeliers",
+      lieu: "Médiathèque des 4C",
+      adresse: "7 rue des Cordeliers",
       ville: "Lons-le-Saunier",
       url: ""
     },
@@ -205,7 +208,8 @@ window.SITE = {
       heure: "17h30 – 19h",
       type: "Rencontre & dédicace",
       titre: "Rencontre autour du Palais",
-      lieu: "Librairie Maupetit, 142 La Canebière",
+      lieu: "Librairie Maupetit",
+      adresse: "142 La Canebière",
       ville: "Marseille",
       url: "https://www.librairesdusud.com/rencontre/rencontre-avec-francois-henri-deserable/"
     },

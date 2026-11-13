@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Publications — François-Henri Désérable</title>
+<meta name="description" content="Les publications de François-Henri Désérable : livres, ouvrages collectifs et textes parus en revues.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur">
+    <a class="logo" href="index.html">François-Henri <span>Désérable</span></a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="index.html">Accueil</a>
+      <a href="publications.html" aria-current="page">Publications</a>
+      <a href="biographie.html">Biographie</a>
+      <a href="agenda.html">Agenda</a>
+      <a href="presse.html">Presse</a>
+    </nav>
+  </div>
+</header>
+<main class="conteneur">
+  <div class="page-titre">
+    <div class="surtitre">Œuvres</div>
+    <h1>Publications</h1>
+    <p>Livres, préfaces, nouvelles et textes parus en revues, de la Révolution française aux caves de Bourgogne, en passant par l'Iran et l'Amérique du Sud.</p>
+    <nav class="sommaire" aria-label="Sections de la page">
+      <a href="#livres">Livres</a>
+      <a href="#collectifs">Ouvrages collectifs</a>
+      <a href="#revues">Revues littéraires</a>
+    </nav>
+  </div>
+
+  <section id="livres" class="bloc-publi">
+    <div class="section-titre"><h2>Romans &amp; récits</h2><span class="compteur">Gallimard</span></div>
+    <div class="filtres" role="group" aria-label="Filtrer les livres">
+      <button type="button" data-filtre="tous" aria-pressed="true">Tous</button>
+      <button type="button" data-filtre="romans" aria-pressed="false">Romans</button>
+      <button type="button" data-filtre="recits" aria-pressed="false">Récits</button>
+    </div>
+    <div id="catalogue"></div>
+  </section>
+
+  <section id="collectifs" class="bloc-publi">
+    <div class="section-titre"><h2>Ouvrages collectifs</h2></div>
+    <ul id="liste-collectifs" class="biblio"></ul>
+  </section>
+
+  <section id="revues" class="bloc-publi">
+    <div class="section-titre"><h2>Revues littéraires</h2></div>
+    <ul id="liste-revues" class="biblio"></ul>
+  </section>
+</main>
+<footer class="pied">
+  <div class="conteneur">
+    <span>© <span id="annee"></span> François-Henri Désérable — site vitrine</span>
+    <span><a href="publications.html">Publications</a> · <a href="biographie.html">Biographie</a> · <a href="agenda.html">Agenda</a> · <a href="presse.html">Presse</a></span>
+  </div>
+</footer>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

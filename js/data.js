@@ -17,7 +17,7 @@ window.SITE = {
       kicker: "Prix Renaudot",
       titre: "Le Palais, prix Renaudot 2026",
       texte: "Le jury du prix Renaudot, pour son centenaire, couronne Le Palais, grand roman d'aventures sur le vin. L'auteur dédie son prix aux vignerons.",
-      lien: "romans.html#palais",
+      lien: "publications.html#palais",
       theme: "vin",
       image: "",
       visuel: "images/palais-illustration.jpg"
@@ -36,7 +36,7 @@ window.SITE = {
       kicker: "Nouveau livre",
       titre: "Chagrin d'un chant inachevé",
       texte: "Sur la route de Che Guevara : cinq mois à travers l'Amérique du Sud, sur l'itinéraire du voyage à motocyclette d'Ernesto Guevara et d'Alberto Granado.",
-      lien: "romans.html#chagrin",
+      lien: "publications.html#chagrin",
       theme: "terre",
       image: "",
       visuel: "images/chagrin.jpg"
@@ -46,7 +46,7 @@ window.SITE = {
       kicker: "Distinction",
       titre: "Prix Montaigne 2024",
       texte: "L'usure d'un monde, récit d'une traversée de l'Iran au moment de la révolte « Femme, vie, liberté », est distingué.",
-      lien: "romans.html#usure",
+      lien: "publications.html#usure",
       theme: "nuit",
       image: ""
     },
@@ -64,7 +64,7 @@ window.SITE = {
       kicker: "Académie française",
       titre: "Grand Prix du roman",
       texte: "Mon maître et mon vainqueur reçoit le Grand Prix du roman de l'Académie française. L'auteur a 34 ans.",
-      lien: "romans.html#maitre",
+      lien: "publications.html#maitre",
       theme: "bordeaux",
       image: ""
     }
@@ -151,6 +151,48 @@ window.SITE = {
       resume: "Paris, pendant la Révolution.\nOn y croise Charlotte Corday, dans sa cellule, pendant qu’un élève de David achève son portrait ; Adam Lux, un allemand tombé amoureux d’elle dans des circonstances pour le moins inattendues ; les Girondins, la fameuse nuit de leur dernier banquet à la Conciergerie ; Danton, pendant son ultime voyage jusqu’à la place de la Révolution ; le plus grand esprit français du XVIIIᵉ siècle, qui nous apprend comment mourir avec élégance ; mais aussi Marie-Antoinette et Robespierre, le marquis de Lantenac et André Chénier.\nTous, dans les jours, les heures ou les minutes précédant la chute de leur tête dans le panier du bourreau.",
       prix: ["Prix de la Vocation"]
     }
+  ],
+
+  // Ouvrages collectifs (préfaces, postfaces, nouvelles).
+  // *texte* = italique ; [texte](https://…) = lien.
+  collectifs: [
+    { titre: "« Le monde en trois lettres »", details: "préface à *Noir et autres nouvelles*, Prix du Jeune Écrivain, Buchet-Chastel, 2020." },
+    { titre: "*Mes amis*, d’Emmanuel Bove", details: "postface, Le Livre de Poche, 2018." },
+    { titre: "Préface aux *Sept générations d’exécuteurs. Mémoires des Sanson*", details: "éd. Perrin, coll. « Tempus », 2015." },
+    { titre: "*Clic ! Clac ! Boum !*", details: "nouvelle de l’ouvrage *Histoires en creux*, éd. Buchet/Chastel, collectif rassemblant les textes des lauréats du Prix du Jeune Écrivain, 2012." }
+  ],
+
+  // Textes parus en revues littéraires (même syntaxe).
+  revues: [
+    { titre: "« Un homme averti »", details: "Revue Bastille, n° 14, février 2023." },
+    { titre: "« Looking for Süskind »", details: "JDD Magazine, n° 2, novembre 2022." },
+    { titre: "« Faux cachemire au Cachemire »", details: "Revue Bastille, n° 11, novembre 2022." },
+    { titre: "« Aimer comme on aime quand on aime une fois dans sa vie »", details: "France Inter, été 2022." },
+    { titre: "« La lettre et la Loire »", details: "Zadig, n° 13, mars 2022." },
+    { titre: "« La vie est ailleurs »", details: "Décapage, n° 64, Automne-hiver 2021." },
+    { titre: "« Carnets »", details: "Décapage, n° 63, Printemps-été 2021." },
+    { titre: "« Tout est déjà dans les livres »", details: "Tracts, 20 mars 2020." },
+    { titre: "« Au cœur de la BnF »", details: "Revue de la BnF, 2020/2, n° 61, octobre 2020." },
+    { titre: "« La tête à l’envers – en Nouvelle-Zélande »", details: "Holiday, mars 2019." },
+    { titre: "« Le Super Bowl ? Quel Super Bowl ? Une semaine à La Nouvelle-Orléans »", details: "Revue Long Cours, 2019." },
+    { titre: "« On montrera… »", details: "Décapage, n° 60, printemps-été 2019." },
+    { titre: "« Cette jolie jupe retroussée – À Manosque, chez Giono »", details: "La Nouvelle Revue Française, n° 634, janvier 2019." },
+    { titre: "« Beatnik, bums and billionaires – à San Francisco »", details: "America, n° 7, automne 2018." },
+    { titre: "« Mille roses rouges et blanches dans la maison bleue »", details: "Le 1, Hors-série 2018." },
+    { titre: "« Une demi-heure sur le Boulevard Saint-Germain »", details: "(Emilie Raja), Décapage, n° 58, hiver-printemps 2018." },
+    { titre: "« Et vous, je vous en pose des questions ? »", details: "Décapage, n° 57, été-automne 2017." },
+    { titre: "« Michon le père »", details: "Cahier de l’Herne Pierre Michon, novembre 2017." },
+    { titre: "« Deux hasards en octobre »", details: "Revue Décapage, [n°56](http://revuedecapage.blogspot.fr/search/label/NUM%C3%89RO%2056), hiver-printemps 2017." },
+    { titre: "« Une pêche d’enfer »", details: "Revue Desports, [n° 9](http://www.editions-du-sous-sol.com/publication/desports-9/), juillet 2016." },
+    { titre: "« Le jour où mon manuscrit a été accepté : Le vol va bien se passer »", details: "Revue Décapage, [n° 53](http://revuedecapage.blogspot.fr/search/label/NUM%C3%89RO%2053), été-automne 2015." },
+    { titre: "« Une étoile filante »", details: "Revue Desports, [n° 6](http://www.boutique-feuilleton.fr/numero-de-la-revue-desports-xml-353_356-862.html), juin 2015." },
+    { titre: "« Une lettre pour le Rimbaud des mathématiques : Évariste Galois »", details: "Revue Décapage, [n° 52](http://revuedecapage.blogspot.fr/search/label/NUM%C3%89RO%2052), hiver-printemps 2015." },
+    { titre: "« Pour saluer M. Piekielny (et Romain Gary) »", details: "Revue L’Infini, [n° 129](http://www.gallimard.fr/Catalogue/GALLIMARD/Revue-L-Infini/L-Infini127), automne 2014." },
+    { titre: "« Portrait de l’auteur en mètres carré »", details: "Revue Décapage, [n° 51](http://revuedecapage.blogspot.fr/search/label/NUM%C3%89RO%2051), automne-hiver 2014." },
+    { titre: "« Les canulars littéraires »", details: "avec Clément Bénech, Revue Décapage, [n° 50](http://revuedecapage.blogspot.fr/search/label/NUM%C3%89RO%2050), printemps-été 2014." },
+    { titre: "« Quelques jours à Beyrouth »", details: "Revue L’Infini, [n° 126](http://www.gallimard.fr/Catalogue/GALLIMARD/Revue-L-Infini/L-Infini124), mars 2014." },
+    { titre: "« 1820 signes »", details: "Revue Décapage, [n° 49](http://revuedecapage.blogspot.fr/search/label/NUM%C3%89RO%2049), hiver-printemps 2014." },
+    { titre: "« Sur les toits »", details: "nouvelle illustrée par Élis Wilk, Revue Décapage, [n° 48](http://revuedecapage.blogspot.fr/search/label/NUM%C3%89RO%2048), automne-hiver 2013." }
   ],
 
   // Agenda : date au format AAAA-MM-JJ. Les dates passées sont classées automatiquement.

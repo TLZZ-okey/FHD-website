@@ -82,13 +82,28 @@
   var derniers = $("#derniers-livres");
   if (derniers) {
     derniers.innerHTML = S.livres.slice(0, 4).map(function (l) {
-      return '<a class="carte-livre" href="romans.html#' + esc(l.id) + '">' + couverture(l) +
+      return '<a class="carte-livre" href="publications.html#' + esc(l.id) + '">' + couverture(l) +
         '<h3>' + esc(l.titre) + '</h3><div class="meta">' + esc(l.genre) + ' · ' + l.annee + '</div>' +
         (l.prix.length ? '<div class="badge">✦ ' + esc(l.prix[0]) + '</div>' : "") + '</a>';
     }).join("");
   }
 
-  // ---------- Page Romans ----------
+  // ---------- Page Publications : ouvrages collectifs et revues ----------
+  function enrichir(t) {
+    return esc(t)
+      .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+      .replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  }
+  function biblio(id, liste) {
+    var el = $(id); if (!el || !liste) return;
+    el.innerHTML = liste.map(function (e) {
+      return '<li><span class="biblio-titre">' + enrichir(e.titre) + '</span>' + (/^\(/.test(e.details) ? " " : ", ") + '<span class="biblio-details">' + enrichir(e.details) + '</span></li>';
+    }).join("");
+  }
+  biblio("#liste-collectifs", S.collectifs);
+  biblio("#liste-revues", S.revues);
+
+  // ---------- Page Publications : livres ----------
   var catalogue = $("#catalogue");
   if (catalogue) {
     var rendre = function (filtre) {

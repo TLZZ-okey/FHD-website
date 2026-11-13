@@ -165,6 +165,33 @@ window.SITE = {
   // Agenda : date au format AAAA-MM-JJ. Les dates passées sont classées automatiquement.
   agenda: [
     {
+      date: "2026-11-18",
+      heure: "19h30",
+      type: "Rencontre",
+      titre: "Rencontre autour du Palais",
+      lieu: "Librairie Masséna, 55 rue Gioffredo",
+      ville: "Nice",
+      url: ""
+    },
+    {
+      date: "2026-11-17",
+      heure: "18h30",
+      type: "Rencontre",
+      titre: "Rencontre autour du Palais",
+      lieu: "Librairie Autour d'un livre, 17 rue Jean Jaurès",
+      ville: "Cannes",
+      url: ""
+    },
+    {
+      date: "2026-11-14",
+      heure: "11h",
+      type: "Rencontre",
+      titre: "Rencontre autour du Palais",
+      lieu: "Médiathèque des 4C, 7 rue des Cordeliers",
+      ville: "Lons-le-Saunier",
+      url: ""
+    },
+    {
       date: "2026-11-24",
       heure: "19h30",
       type: "Rencontre",

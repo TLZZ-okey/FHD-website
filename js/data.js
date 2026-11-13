@@ -171,7 +171,7 @@ window.SITE = {
       titre: "François-Henri Désérable à la librairie Masséna à Nice",
       lieu: "Librairie Masséna",
       adresse: "55 rue Gioffredo",
-      ville: "Nice",
+      ville: "06000 Nice",
       url: ""
     },
     {
@@ -181,7 +181,7 @@ window.SITE = {
       titre: "François-Henri Désérable à la librairie Autour d'un livre à Cannes",
       lieu: "Librairie Autour d'un livre",
       adresse: "17 rue Jean Jaurès",
-      ville: "Cannes",
+      ville: "06400 Cannes",
       url: ""
     },
     {
@@ -192,6 +192,7 @@ window.SITE = {
       lieu: "Médiathèque des 4C",
       adresse: "7 rue des Cordeliers",
       ville: "Lons-le-Saunier",
+      ville: "39000 Lons-le-Saunier",
       url: ""
     },
     {
@@ -199,8 +200,8 @@ window.SITE = {
       heure: "19h30",
       type: "Rencontre",
       titre: "Rencontre autour du Palais",
-      lieu: "Librairie du Centre",
-      ville: "Ferney-Voltaire (Ain)",
+      lieu: "Librairie du Centre, 9bis Grand'rue",
+      ville: "01210 Ferney-Voltaire",
       url: "https://www.paysdegex-montsjura.com/en/events/an-interview-with-francois-henri-deserable-author-of-the-book-le-palais-published-by-gallimard/"
     },
     {
@@ -210,7 +211,7 @@ window.SITE = {
       titre: "Rencontre autour du Palais",
       lieu: "Librairie Maupetit",
       adresse: "142 La Canebière",
-      ville: "Marseille",
+      ville: "13000 Marseille",
       url: "https://www.librairesdusud.com/rencontre/rencontre-avec-francois-henri-deserable/"
     },
     {
@@ -218,8 +219,8 @@ window.SITE = {
       heure: "14h30",
       type: "Rencontre",
       titre: "Rencontre avec les lecteurs, après le prix Renaudot",
-      lieu: "Siège du Bien public",
-      ville: "Dijon",
+      lieu: "siège du Bien public, Boulevard Chanoine-Kir",
+      ville: "21000 Dijon",
       url: "https://inforadar.fr/a-dijon-le-prix-renaudot-precede-la-rencontre-avec-francois-henri-deserable"
     },
     {

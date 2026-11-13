@@ -5,6 +5,7 @@ Site statique (HTML/CSS/JS, sans dépendance ni build).
 - `index.html` : carrousel des actualités + derniers livres parus
 - `romans.html` : tous les livres, filtrables (romans / récits)
 - `biographie.html` : biographie et repères chronologiques
+- `agenda.html` : rencontres, dédicaces, parutions (passées / à venir triées automatiquement)
 - `presse.html` : revue de presse
 
 ## Modifier le contenu

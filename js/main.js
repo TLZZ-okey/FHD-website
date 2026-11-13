@@ -114,6 +114,31 @@
     if (location.hash) { var cible = document.getElementById(location.hash.slice(1)); if (cible) cible.scrollIntoView(); }
   }
 
+  // ---------- Page Agenda (+ aperçu sur l'accueil) ----------
+  var MOIS = ["janv.", "févr.", "mars", "avril", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
+  function evenementHTML(e, passe) {
+    var d = e.date.split("-").map(Number);
+    var titre = e.url ? '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.titre) + '</a>' : esc(e.titre);
+    return '<li class="evenement' + (passe ? " passe" : "") + '">' +
+      '<div class="ev-date"><div class="ev-jour">' + d[2] + '</div><div class="ev-mois">' + MOIS[d[1] - 1] + ' ' + d[0] + '</div></div>' +
+      '<div><div class="ev-type">' + esc(e.type) + (e.heure ? ' · ' + esc(e.heure) : "") + '</div>' +
+      '<h3>' + titre + '</h3><div class="ev-lieu">' + esc(e.lieu) + ' — ' + esc(e.ville) + '</div></div></li>';
+  }
+  var aujourdhui = new Date(); aujourdhui.setHours(0, 0, 0, 0);
+  var estPasse = function (e) { return new Date(e.date + "T23:59:59") < aujourdhui; };
+  var aVenir = S.agenda.filter(function (e) { return !estPasse(e); }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+  var passes = S.agenda.filter(estPasse).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+  var ag = $("#agenda-a-venir");
+  if (ag) {
+    ag.innerHTML = aVenir.length ? aVenir.map(function (e) { return evenementHTML(e, false); }).join("") : '<li class="agenda-vide">Aucune date annoncée pour le moment.</li>';
+    $("#agenda-passes").innerHTML = passes.map(function (e) { return evenementHTML(e, true); }).join("");
+  }
+  var agAccueil = $("#agenda-accueil");
+  if (agAccueil) {
+    if (aVenir.length) agAccueil.innerHTML = aVenir.slice(0, 3).map(function (e) { return evenementHTML(e, false); }).join("");
+    else agAccueil.closest("section").hidden = true;
+  }
+
   // ---------- Page Presse ----------
   var presse = $("#presse");
   if (presse) {

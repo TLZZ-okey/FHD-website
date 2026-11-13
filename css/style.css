@@ -235,3 +235,29 @@ a { color: inherit; }
 /* Couverture avec image réelle */
 .couverture.avec-image { padding: 0; background: var(--papier-2); }
 .couverture.avec-image::before { content: none; }
+.theme-vin { background: radial-gradient(circle at 78% 30%, #8e2c52 0, #5c1a33 45%, #1f0710 100%); }
+
+/* ---------- Agenda ---------- */
+.agenda-bloc { max-width: 860px; margin: 0 auto 56px; }
+.agenda-bloc h2 { font-family: var(--serif); font-weight: 500; font-size: 1.9rem; margin: 0 0 8px; }
+.agenda-liste { list-style: none; margin: 0; padding: 0; }
+.evenement { display: grid; grid-template-columns: 96px 1fr; gap: 28px; padding: 26px 0; border-top: 1px solid var(--filet); align-items: start; }
+.evenement:last-child { border-bottom: 1px solid var(--filet); }
+.ev-date { text-align: center; border: 1px solid var(--filet); background: var(--blanc); padding: 10px 6px; }
+.ev-jour { font-family: var(--serif); font-size: 2.3rem; line-height: 1; font-weight: 600; color: var(--accent); }
+.ev-mois { font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; margin-top: 4px; }
+.ev-type { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.evenement h3 { font-family: var(--serif); font-weight: 500; font-size: 1.5rem; line-height: 1.2; margin: 4px 0 6px; }
+.ev-lieu { color: var(--encre-douce); }
+.evenement.passe { opacity: .55; }
+.evenement.passe .ev-date { background: transparent; }
+.agenda-vide { color: var(--encre-douce); font-style: italic; padding: 20px 0; }
+.agenda-note { max-width: 860px; margin: 0 auto 80px; font-size: .85rem; color: var(--encre-douce); }
+@media (max-width: 720px) {
+  .nav { gap: 0; }
+  .evenement { grid-template-columns: 72px 1fr; gap: 18px; }
+  .ev-jour { font-size: 1.8rem; }
+}
+.section-titre + .agenda-liste .evenement:first-child { border-top: 0; padding-top: 0; }
+.evenement h3 a { text-decoration: none; background-image: linear-gradient(var(--accent), var(--accent)); background-size: 0 1px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .3s; }
+.evenement h3 a:hover { background-size: 100% 1px; }

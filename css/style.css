@@ -358,3 +358,8 @@ a { color: inherit; }
 @media (max-width: 720px) {
   .slide-fond { background-size: var(--taille-m, cover); }
 }
+
+/* Carrousel agenda : dates plus grandes, lieu en gras */
+.sr-date { min-width: 68px; font-size: .78rem; }
+.sr-date b { font-size: 2.4rem; line-height: 1; margin-bottom: 2px; }
+.sr-ville { font-weight: 700; font-size: 1.25rem; }

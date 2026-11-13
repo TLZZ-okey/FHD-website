@@ -318,3 +318,43 @@ a { color: inherit; }
   .section-titre { flex-direction: column; align-items: flex-start; gap: 6px; }
   .section-titre h2 { font-size: 1.9rem; }
 }
+
+/* ---------- Accueil : livres sur une seule colonne ---------- */
+.colonne-livres { display: flex; flex-direction: column; align-items: center; gap: 56px; }
+.colonne-livres .carte-livre { width: 100%; max-width: 260px; text-align: center; text-decoration: none; }
+.colonne-livres .carte-livre h3 { margin: 22px 0 4px; font-size: 1.5rem; }
+.colonne-livres .meta { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--encre-douce); }
+
+/* ---------- Carrousel v2 : fond illustré + vignette ---------- */
+.slide { min-height: 500px; }
+.slide-fond.flou { filter: blur(22px) saturate(1.1) brightness(.7); transform: scale(1.25); }
+.slide-fond::after { background: linear-gradient(90deg, rgba(12,8,6,.82) 0%, rgba(12,8,6,.55) 45%, rgba(12,8,6,.15) 100%); }
+.slide-grille { display: flex; align-items: center; justify-content: space-between; gap: 48px; width: 100%; position: relative; z-index: 1; }
+.slide-grille .slide-contenu { padding: 56px 0 72px; max-width: 600px; }
+.slide-sous-titre { font-family: var(--serif); font-style: italic; font-size: 1.3rem !important; margin: -6px 0 14px !important; opacity: .9; }
+.slide-prix { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; margin: -4px 0 16px; color: #f3d9a4; }
+.slide-vignette { flex-shrink: 0; display: block; }
+.slide-vignette img { height: 360px; width: auto; box-shadow: 0 28px 50px -18px rgba(0,0,0,.75); transition: transform .4s ease; }
+.slide-vignette:hover img { transform: translateY(-4px) rotate(-1deg); }
+.slide-rencontres { list-style: none; margin: 4px 0 28px; padding: 0; display: grid; gap: 12px; }
+.slide-rencontres li { display: flex; align-items: center; gap: 16px; padding: 10px 14px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); backdrop-filter: blur(4px); }
+.sr-date { min-width: 56px; text-align: center; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; line-height: 1.1; }
+.sr-date b { display: block; font-family: var(--serif); font-size: 1.8rem; font-weight: 500; letter-spacing: 0; }
+.sr-texte { display: flex; flex-direction: column; }
+.sr-ville { font-family: var(--serif); font-size: 1.2rem; }
+.sr-lieu { font-size: .85rem; opacity: .8; }
+@media (max-width: 720px) {
+  .slide-vignette { display: none; }
+  .slide-grille .slide-contenu { padding: 44px 0 64px; }
+  .slide-fond::after { background: linear-gradient(0deg, rgba(12,8,6,.85) 0%, rgba(12,8,6,.55) 60%, rgba(12,8,6,.35) 100%); }
+}
+.slide-fond { background-position: var(--pos, center); }
+.slide-teinte { position: absolute; inset: 0; mix-blend-mode: multiply; opacity: .75; }
+.slide-teinte + .conteneur, .slide-teinte ~ .slide-grille { z-index: 2; }
+.slide-vignette img { height: 330px; }
+@media (max-width: 720px) {
+  .slide-fond { background-position: var(--pos-m, var(--pos, center)); }
+}
+@media (max-width: 720px) {
+  .slide-fond { background-size: var(--taille-m, cover); }
+}

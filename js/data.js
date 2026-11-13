@@ -3,78 +3,39 @@
  * Pour remplacer un visuel généré par une vraie image (couverture, photo),
  * déposez le fichier dans /images et renseignez le champ `image`
  * (ex. image: "images/chagrin.jpg").
- * Dans le carrousel, le champ image remplit tout le fond ; le champ visuel affiche
- * une image à droite du texte (ex. une couverture ou une affiche).
  * Dans les résumés, chaque retour à la ligne crée un nouveau paragraphe.
  */
 window.SITE = {
   auteur: "François-Henri Désérable",
 
-  // Carrousel de la page d'accueil (du plus récent au plus ancien)
-  news: [
-    {
-      date: "3 novembre 2026",
-      kicker: "Prix Renaudot",
-      titre: "Le Palais, prix Renaudot 2026",
-      texte: "Le jury du prix Renaudot, pour son centenaire, couronne Le Palais, grand roman d'aventures sur le vin. L'auteur dédie son prix aux vignerons.",
-      lien: "publications.html#palais",
-      theme: "vin",
-      image: "",
-      visuel: "images/palais-illustration.jpg"
+  // Carrousel de la page d'accueil
+  //  1. « une » : le livre mis en avant, avec une illustration en fond et sa couverture en vignette
+  //  2. « rencontres » : les prochaines dates de l'agenda (calculées automatiquement)
+  //  3. « livres » : les livres suivants (fond = couverture floutée, ou `fond` si précisé)
+  carrousel: {
+    une: {
+      livre: "palais",
+      fond: "images/palais-illustration.jpg",
+      positionFond: "center 72%",
+      positionFondMobile: "center 100%",
+      tailleFondMobile: "auto 190%",
+      kicker: "Roman · Prix Renaudot 2026",
+      texte: "Des bidonvilles de Delhi aux caves de Bourgogne, un grand roman d'aventures sur le vin, portrait d'un génie hors la loi dont les crimes se dégustent."
     },
-    {
-      date: "Novembre 2026",
-      kicker: "Agenda",
-      titre: "À la rencontre des lecteurs",
-      texte: "Dijon, Marseille, Ferney-Voltaire… Retrouvez les prochaines rencontres et dédicaces autour du Palais.",
-      lien: "agenda.html",
-      theme: "nuit",
-      image: ""
+    rencontres: {
+      nombre: 3,
+      fond: "images/portrait.jpg",
+      positionFond: "center 30%"
     },
-    {
-      date: "2025",
-      kicker: "Nouveau livre",
-      titre: "Chagrin d'un chant inachevé",
-      texte: "Sur la route de Che Guevara : cinq mois à travers l'Amérique du Sud, sur l'itinéraire du voyage à motocyclette d'Ernesto Guevara et d'Alberto Granado.",
-      lien: "publications.html#chagrin",
-      theme: "terre",
-      image: "",
-      visuel: "images/chagrin.jpg"
-    },
-    {
-      date: "2024",
-      kicker: "Distinction",
-      titre: "Prix Montaigne 2024",
-      texte: "L'usure d'un monde, récit d'une traversée de l'Iran au moment de la révolte « Femme, vie, liberté », est distingué.",
-      lien: "publications.html#usure",
-      theme: "nuit",
-      image: ""
-    },
-    {
-      date: "2024",
-      kicker: "À l'étranger",
-      titre: "L'usure d'un monde traduit",
-      texte: "Le récit iranien poursuit sa route en traduction et dans les festivals littéraires internationaux.",
-      lien: "presse.html",
-      theme: "sable",
-      image: ""
-    },
-    {
-      date: "28 octobre 2021",
-      kicker: "Académie française",
-      titre: "Grand Prix du roman",
-      texte: "Mon maître et mon vainqueur reçoit le Grand Prix du roman de l'Académie française. L'auteur a 34 ans.",
-      lien: "publications.html#maitre",
-      theme: "bordeaux",
-      image: ""
-    }
-  ],
+    livres: ["chagrin", "usure", "maitre"]
+  },
 
   // Livres (du plus récent au plus ancien)
   livres: [
     {
       id: "palais",
       titre: "Le Palais",
+      parution: "20 août 2026",
       annee: 2026,
       editeur: "Gallimard",
       genre: "Roman",
@@ -87,6 +48,7 @@ window.SITE = {
       id: "chagrin",
       titre: "Chagrin d'un chant inachevé",
       sousTitre: "Sur la route de Che Guevara",
+      parution: "Mai 2025",
       annee: 2025,
       editeur: "Gallimard",
       genre: "Récit",
@@ -99,6 +61,7 @@ window.SITE = {
       id: "usure",
       titre: "L'usure d'un monde",
       sousTitre: "Une traversée de l'Iran",
+      parution: "4 mai 2023",
       annee: 2023,
       editeur: "Gallimard",
       genre: "Récit de voyage",
@@ -110,6 +73,7 @@ window.SITE = {
     {
       id: "maitre",
       titre: "Mon maître et mon vainqueur",
+      parution: "Août 2021",
       annee: 2021,
       editeur: "Gallimard",
       genre: "Roman",
@@ -121,6 +85,7 @@ window.SITE = {
     {
       id: "piekielny",
       titre: "Un certain M. Piekielny",
+      parution: "17 août 2017",
       annee: 2017,
       editeur: "Gallimard",
       genre: "Roman",
@@ -132,6 +97,7 @@ window.SITE = {
     {
       id: "evariste",
       titre: "Évariste",
+      parution: "Janvier 2015",
       annee: 2015,
       editeur: "Gallimard",
       genre: "Roman",
@@ -143,6 +109,7 @@ window.SITE = {
     {
       id: "tete",
       titre: "Tu montreras ma tête au peuple",
+      parution: "5 avril 2013",
       annee: 2013,
       editeur: "Gallimard",
       genre: "Récits",

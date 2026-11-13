@@ -28,28 +28,79 @@
       '<div class="couv-editeur">' + esc(l.editeur) + '</div></div></div>';
   }
 
+  function extrait(texte, max) {
+    var t = texte.split("\n")[0];
+    if (t.length <= max) return t;
+    t = t.slice(0, max);
+    return t.slice(0, t.lastIndexOf(" ")).replace(/[\s,;:—–-]+$/, "") + "…";
+  }
   // ---------- Carrousel ----------
   var car = $("#carrousel");
   if (car) {
     var piste = car.querySelector(".carrousel-piste");
     var points = car.querySelector(".carrousel-points");
-    piste.innerHTML = S.news.map(function (n, i) {
-      var fond = n.image
-        ? '<div class="slide-fond" style="background-image:url(\'' + esc(n.image) + '\')"></div>'
-        : '<div class="slide-fond theme-' + esc(n.theme) + '"></div>' + (n.visuel ? "" : '<div class="slide-filigrane" aria-hidden="true">' + esc(n.titre.split(" ")[0]) + '</div>');
-      return '<article class="slide" aria-roledescription="diapositive" aria-label="' + (i + 1) + ' sur ' + S.news.length + '">' + fond +
-        '<div class="conteneur' + (n.visuel ? ' avec-visuel' : '') + '"><div class="slide-contenu">' +
-        '<div class="slide-kicker">' + esc(n.kicker) + ' · ' + esc(n.date) + '</div>' +
-        '<h2>' + esc(n.titre) + '</h2><p>' + esc(n.texte) + '</p>' +
-        '<a class="bouton" href="' + esc(n.lien) + '">En savoir plus</a></div>' +
-        (n.visuel ? '<img class="slide-visuel" src="' + esc(n.visuel) + '" alt="">' : "") +
-        '</div></article>';
+    var C = S.carrousel;
+    var parId = function (id) { return S.livres.filter(function (l) { return l.id === id; })[0]; };
+    var MOIS_C = ["janv.", "févr.", "mars", "avril", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
+    var auj = new Date(); auj.setHours(0, 0, 0, 0);
+    var prochaines = S.agenda.filter(function (e) { return new Date(e.date + "T23:59:59") >= auj; })
+      .sort(function (a, b) { return a.date < b.date ? -1 : 1; })
+      .slice(0, (C.rencontres && C.rencontres.nombre) || 3);
+
+    function fondHTML(img, opts, teinte) {
+      opts = opts || {};
+      return '<div class="slide-fond' + (teinte ? " flou" : "") + '" style="background-image:url(\'' + esc(img) + '\');' +
+        (opts.positionFond ? "--pos:" + esc(opts.positionFond) + ";" : "") +
+        (opts.positionFondMobile ? "--pos-m:" + esc(opts.positionFondMobile) + ";" : "") +
+        (opts.tailleFondMobile ? "--taille-m:" + esc(opts.tailleFondMobile) + ";" : "") + '"></div>' +
+        (teinte ? '<div class="slide-teinte" style="background:' + esc(teinte) + '"></div>' : "");
+    }
+    function vignette(l) {
+      return '<a class="slide-vignette" href="publications.html#' + esc(l.id) + '" tabindex="-1"><img src="' + esc(l.image) + '" alt="Couverture de ' + esc(l.titre) + '"></a>';
+    }
+    function slideLivre(l, opts) {
+      opts = opts || {};
+      var kicker = opts.kicker || (l.genre + " · " + (l.parution || l.annee));
+      var texte = opts.texte || extrait(l.resume, 170);
+      return fondHTML(opts.fond || l.image, opts, opts.fond ? null : l.couleur) +
+        '<div class="conteneur slide-grille"><div class="slide-contenu">' +
+        '<div class="slide-kicker">' + esc(kicker) + '</div>' +
+        '<h2>' + esc(l.titre) + '</h2>' +
+        (l.sousTitre ? '<p class="slide-sous-titre">' + esc(l.sousTitre) + '</p>' : "") +
+        (l.prix.length && !opts.kicker ? '<div class="slide-prix">✦ ' + esc(l.prix[0]) + '</div>' : "") +
+        '<p>' + esc(texte) + '</p>' +
+        '<a class="bouton" href="publications.html#' + esc(l.id) + '">Découvrir le livre</a></div>' +
+        vignette(l) + '</div>';
+    }
+    function slideRencontres() {
+      var r = C.rencontres;
+      return fondHTML(r.fond, r, null) +
+        '<div class="conteneur slide-grille"><div class="slide-contenu">' +
+        '<div class="slide-kicker">Agenda</div>' +
+        '<h2>Prochaines rencontres</h2>' +
+        '<ul class="slide-rencontres">' + prochaines.map(function (e) {
+          var d = e.date.split("-").map(Number);
+          return '<li><span class="sr-date"><b>' + d[2] + '</b>' + MOIS_C[d[1] - 1] + '</span>' +
+            '<span class="sr-texte"><span class="sr-ville">' + esc(e.ville) + (e.heure ? ' · ' + esc(e.heure) : "") + '</span>' +
+            '<span class="sr-lieu">' + esc(e.lieu) + '</span></span></li>';
+        }).join("") + '</ul>' +
+        '<a class="bouton" href="agenda.html">Tout l\'agenda</a></div></div>';
+    }
+
+    var slides = [];
+    var une = C.une && parId(C.une.livre);
+    if (une) slides.push(slideLivre(une, C.une));
+    if (C.rencontres && prochaines.length) slides.push(slideRencontres());
+    (C.livres || []).forEach(function (id) { var l = parId(id); if (l) slides.push(slideLivre(l)); });
+
+    piste.innerHTML = slides.map(function (html, i) {
+      return '<article class="slide" aria-roledescription="diapositive" aria-label="' + (i + 1) + ' sur ' + slides.length + '">' + html + '</article>';
     }).join("");
-    points.innerHTML = S.news.map(function (_, i) {
+    points.innerHTML = slides.map(function (_, i) {
       return '<button type="button" aria-label="Aller à la diapositive ' + (i + 1) + '"></button>';
     }).join("");
 
-    var idx = 0, timer = null, total = S.news.length;
+    var idx = 0, timer = null, total = slides.length;
     function aller(i) {
       idx = (i + total) % total;
       piste.style.transform = "translateX(-" + idx * 100 + "%)";
@@ -78,25 +129,12 @@
     aller(0); demarrer();
   }
 
-  // ---------- Derniers livres (accueil) : cartes en colonnes ----------
-  function extrait(texte, max) {
-    var t = texte.split("\n")[0];
-    if (t.length <= max) return t;
-    t = t.slice(0, max);
-    return t.slice(0, t.lastIndexOf(" ")).replace(/[\s,;:—–-]+$/, "") + "…";
-  }
+  // ---------- Derniers livres (accueil) : couverture, titre, parution — une colonne ----------
   var derniers = $("#derniers-livres");
   if (derniers) {
     derniers.innerHTML = S.livres.slice(0, 4).map(function (l) {
-      return '<article class="carte-livre"><a class="carte-lien" href="publications.html#' + esc(l.id) + '">' +
-        '<div class="carte-couv">' + couverture(l) + '</div>' +
-        '<div class="carte-corps">' +
-        '<div class="meta">' + esc(l.genre) + ' · ' + l.annee + '</div>' +
-        '<h3>' + esc(l.titre) + '</h3>' +
-        (l.prix.length ? '<div class="badge">✦ ' + esc(l.prix[0]) + '</div>' : "") +
-        '<p class="carte-extrait">' + esc(extrait(l.resume, 150)) + '</p>' +
-        '<span class="carte-plus">Découvrir →</span>' +
-        '</div></a></article>';
+      return '<a class="carte-livre" href="publications.html#' + esc(l.id) + '">' + couverture(l) +
+        '<h3>' + esc(l.titre) + '</h3><div class="meta">Parution : ' + esc(l.parution || l.annee) + '</div></a>';
     }).join("");
   }
 

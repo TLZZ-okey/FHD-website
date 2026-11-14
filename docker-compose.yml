@@ -1,8 +1,30 @@
+# Trois serveurs web, un par version du site :
+#   http://<serveur>:8001  ->  version d'origine     (branche master)
+#   http://<serveur>:8002  ->  thème Canadiens       (branche theme-canadiens)
+#   http://<serveur>:8003  ->  thème Noir            (branche theme-noir)
+#
+# Les dossiers versions/* sont préparés (et mis à jour) par : ./deploy/versions.sh
 services:
-  site:
-    build: .
-    image: fhdeserable-site
-    container_name: fhdeserable
+  site-original:
+    build: ./versions/master
+    image: fhdeserable-original
+    container_name: fhdeserable-original
     restart: unless-stopped
     ports:
-      - "8001:80"   # port du serveur : port du conteneur
+      - "8001:80"
+
+  site-canadiens:
+    build: ./versions/theme-canadiens
+    image: fhdeserable-canadiens
+    container_name: fhdeserable-canadiens
+    restart: unless-stopped
+    ports:
+      - "8002:80"
+
+  site-noir:
+    build: ./versions/theme-noir
+    image: fhdeserable-noir
+    container_name: fhdeserable-noir
+    restart: unless-stopped
+    ports:
+      - "8003:80"

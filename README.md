@@ -26,3 +26,9 @@ Pour la photo de l'auteur, voir le commentaire dans `biographie.html`.
 Ouvrir `index.html` dans un navigateur, ou :
 
     python3 -m http.server 8000
+
+## Thème « Noir »
+
+- `css/noir.css` : thème sobre, fond noir, texte blanc, accents ambre (`--ambre`) pour
+  les éléments importants (nom de l'auteur, dates, prix, liens). Photos de fond en noir et blanc.
+- `css/fonts.css` + `fonts/` : polices Cormorant Garamond et Inter hébergées sur le site (licence SIL OFL)

@@ -9,6 +9,7 @@ COPY index.html publications.html biographie.html agenda.html presse.html favico
 COPY css/    /usr/share/nginx/html/css/
 COPY js/     /usr/share/nginx/html/js/
 COPY images/ /usr/share/nginx/html/images/
+COPY fonts/  /usr/share/nginx/html/fonts/
 
 EXPOSE 80
 

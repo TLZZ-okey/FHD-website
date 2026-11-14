@@ -5,4 +5,4 @@ services:
     container_name: fhdeserable
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8001:80"   # port du serveur : port du conteneur

@@ -1,7 +1,7 @@
 # Mettre le site en ligne sur le réseau de la maison
 
 Le site tourne dans un conteneur Docker (serveur web nginx) et répond à l'adresse
-**http://fhdeserable.fr** depuis tous les appareils connectés à votre box.
+**http://fhdeserable.fr:8001** depuis tous les appareils connectés à votre box.
 
 Fichiers concernés :
 
@@ -9,7 +9,7 @@ Fichiers concernés :
 |---|---|
 | `Dockerfile` | Construit l'image : nginx + les pages, images, polices du site |
 | `deploy/nginx.conf` | Configuration du serveur web (nom de domaine, cache, sécurité) |
-| `docker-compose.yml` | Lance le conteneur sur le port 80, redémarrage automatique |
+| `docker-compose.yml` | Lance le conteneur sur le port **8001** du serveur, redémarrage automatique |
 | `.dockerignore` | Exclut de l'image ce qui n'est pas le site (git, documentation…) |
 
 ---
@@ -31,11 +31,15 @@ Raspberry Pi, un NAS (Synology, QNAP…) compatible Docker.
 
 ## 2. Lancer le site
 
+Le site écoute sur le **port 8001** du serveur. Pour en changer, modifiez la ligne
+`"8001:80"` de `docker-compose.yml` (le premier nombre est le port du serveur) et le
+`:8001` de la redirection `www` dans `deploy/nginx.conf`.
+
 ```bash
 docker compose up -d --build
 ```
 
-Vérifiez sur le serveur lui-même : http://localhost doit afficher le site.
+Vérifiez sur le serveur lui-même : http://localhost:8001 doit afficher le site.
 
 Commandes utiles :
 
@@ -63,7 +67,7 @@ même adresse IP sur le réseau.
    - SFR Box : `192.168.1.1` › Réseau › DHCP
 
 Dès maintenant, le site est accessible depuis n'importe quel appareil de la maison via
-`http://192.168.1.50` (remplacez par l'adresse de votre serveur).
+`http://192.168.1.50:8001` (remplacez par l'adresse de votre serveur).
 
 ## 4. Utiliser le nom de domaine fhdeserable.fr
 
@@ -97,8 +101,11 @@ Ajoutez ces deux lignes au fichier `hosts` de chaque ordinateur :
 Les téléphones et tablettes ne permettent pas de modifier ce fichier : pour eux,
 utilisez l'option A ou l'adresse IP directement.
 
-Ensuite, ouvrez **http://fhdeserable.fr** dans un navigateur.
-`www.fhdeserable.fr` redirige automatiquement vers `fhdeserable.fr`.
+Ensuite, ouvrez **http://fhdeserable.fr:8001** dans un navigateur.
+`www.fhdeserable.fr:8001` redirige automatiquement vers `fhdeserable.fr:8001`.
+
+Le `:8001` à la fin de l'adresse est nécessaire : sans lui, le navigateur s'adresse
+au port 80, où le site ne répond pas.
 
 > **À savoir** : si vous n'êtes pas propriétaire du domaine `fhdeserable.fr`, ce
 > réglage ne vaut qu'à la maison. Depuis l'extérieur, le nom ne mènera pas à votre

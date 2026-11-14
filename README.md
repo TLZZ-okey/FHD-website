@@ -8,6 +8,8 @@ Site statique (HTML/CSS/JS, sans dépendance ni build).
 - `agenda.html` : rencontres, dédicaces, parutions (passées / à venir triées automatiquement)
 - `presse.html` : revue de presse
 
+Mise en ligne avec Docker : voir `DEPLOIEMENT.md`.
+
 ## Modifier le contenu
 
 Tout le contenu (actualités, livres, articles) est dans `js/data.js`.

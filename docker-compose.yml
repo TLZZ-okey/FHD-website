@@ -1,0 +1,8 @@
+services:
+  site:
+    build: .
+    image: fhdeserable-site
+    container_name: fhdeserable
+    restart: unless-stopped
+    ports:
+      - "80:80"

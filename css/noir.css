@@ -2,7 +2,7 @@
  * Thème « Noir » : sobre et épuré.
  * Fond noir, texte blanc, une seule couleur chaude (ambre) pour faire ressortir
  * l'essentiel : nom de l'auteur, dates, prix, liens et éléments actifs.
- * Les photos de fond passent en noir et blanc ; les couvertures gardent leurs couleurs.
+ * Les images gardent leurs couleurs, sauf le portrait de l'auteur, en noir et blanc.
  * Ce fichier se charge après style.css et n'en surcharge que l'apparence.
  */
 :root {
@@ -43,11 +43,9 @@ a { text-decoration-color: rgba(233,162,59,.5); }
 .lien-discret, .sommaire a { color: var(--ambre); }
 .compteur { color: var(--encre-douce); }
 
-/* ---------- Carrousel : photos en noir et blanc ---------- */
+/* ---------- Carrousel : images en couleur, sauf le portrait de l'auteur ---------- */
 .carrousel { background: #000; color: #fff; }
-.slide-fond { filter: grayscale(1) contrast(1.05); }
-.slide-fond.flou { filter: grayscale(1) blur(22px) brightness(.55); }
-.slide-teinte { display: none; }
+.slide-fond[style*="portrait.jpg"] { filter: grayscale(1) contrast(1.05); }
 .slide-fond::after { background: linear-gradient(90deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.6) 45%, rgba(0,0,0,.15) 100%); }
 .slide-kicker { color: var(--ambre); opacity: 1; }
 .slide h2 { font-weight: 400; }

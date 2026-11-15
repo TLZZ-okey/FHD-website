@@ -1,21 +1,25 @@
+# Modèle de configuration nginx d'une version du site.
+# Le nom de domaine est inséré au démarrage du conteneur, à partir de la variable
+# d'environnement DOMAINE définie dans docker-compose.yml (ex. fhdeserable-v1.fr).
+
 # Récupère le port tapé dans l'adresse (ex. « :8002 ») pour le conserver
-# lors de la redirection www -> fhdeserable.fr, quel que soit le port utilisé.
+# lors de la redirection www -> domaine principal, quel que soit le port utilisé.
 map $http_host $suffixe_port {
     "~:(?<p>[0-9]+)$" ":$p";
     default           "";
 }
 
-# Redirige www.fhdeserable.fr vers fhdeserable.fr
+# Redirige www.${DOMAINE} vers ${DOMAINE}
 server {
     listen 80;
-    server_name www.fhdeserable.fr;
-    return 301 http://fhdeserable.fr$suffixe_port$request_uri;
+    server_name www.${DOMAINE};
+    return 301 http://${DOMAINE}$suffixe_port$request_uri;
 }
 
 server {
     listen 80 default_server;
     # default_server : le site répond aussi si on l'appelle par l'adresse IP du serveur
-    server_name fhdeserable.fr _;
+    server_name ${DOMAINE} _;
 
     root  /usr/share/nginx/html;
     index index.html;

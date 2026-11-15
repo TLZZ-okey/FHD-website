@@ -1,8 +1,10 @@
 # Site vitrine François-Henri Désérable — serveur web nginx léger
 FROM nginx:1.27-alpine
 
-# Configuration du serveur (nom de domaine fhdeserable.fr)
-COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
+# Configuration du serveur. Le nom de domaine vient de la variable DOMAINE
+# (fixée dans docker-compose.yml) ; l'image nginx l'insère au démarrage.
+ENV DOMAINE=fhdeserable.fr
+COPY deploy/nginx.conf.template /etc/nginx/templates/default.conf.template
 
 # Fichiers du site
 COPY index.html publications.html biographie.html agenda.html presse.html favicon.ico /usr/share/nginx/html/

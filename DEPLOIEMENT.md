@@ -1,133 +1,163 @@
-# Mettre le site en ligne sur le réseau de la maison
+# Mettre les sites en ligne sur le réseau de la maison
 
-Trois versions du site tournent chacune dans son conteneur Docker (serveur web nginx),
-avec **son propre nom de domaine** et **son propre port**, toutes sur le même serveur :
+Trois versions du site, chacune dans son conteneur Docker, chacune sur son nom de
+domaine, derrière un **reverse proxy** :
 
-| Nom de domaine | Port | Version | Branche GitHub |
+| Nom de domaine | Conteneur | Version | Branche GitHub |
 |---|---|---|---|
-| **http://fhdeserable-v1.fr** | 8001 | Version d'origine | `master` |
-| **http://fhdeserable-v2.fr** | 8002 | Thème Canadiens (bleu-blanc-rouge) | `theme-canadiens` |
-| **http://fhdeserable-v3.fr** | 8003 | Thème Noir | `theme-noir` |
-
-## Comment un domaine arrive sur le bon port
-
-Un nom de domaine ne désigne qu'une **adresse IP**, jamais un port : c'est une limite du
-DNS. Les trois domaines pointent donc vers la même adresse (celle du serveur), et un
-petit **aiguilleur** (le conteneur `fhdeserable-proxy`, un « reverse proxy ») écoute sur
-le port 80, le port par défaut des navigateurs. Il lit le nom de domaine demandé et
-transmet la visite au bon conteneur :
+| **http://fhdeserable-v1.fr** | `fhdeserable-v1` | Version d'origine | `master` |
+| **http://fhdeserable-v2.fr** | `fhdeserable-v2` | Thème Canadiens (bleu-blanc-rouge) | `theme-canadiens` |
+| **http://fhdeserable-v3.fr** | `fhdeserable-v3` | Thème Noir | `theme-noir` |
 
 ```
-http://fhdeserable-v1.fr ─┐                        ┌─> fhdeserable-v1 (port 8001)
-http://fhdeserable-v2.fr ─┼─> serveur, port 80 ────┼─> fhdeserable-v2 (port 8002)
-http://fhdeserable-v3.fr ─┘   (fhdeserable-proxy)  └─> fhdeserable-v3 (port 8003)
+                         serveur (192.168.1.50)
+                ┌──────────────────────────────────────────────────────┐
+navigateur ──►  │ port 80 ─► fhdeserable-proxy ──┬─► fhdeserable-v1    │
+(maison)        │            (reverse proxy)     ├─► fhdeserable-v2    │
+                │                                └─► fhdeserable-v3    │
+                │                 réseau Docker interne « fhd »        │
+                └──────────────────────────────────────────────────────┘
 ```
 
-Résultat : on tape simplement `fhdeserable-v2.fr`, sans `:8002`. Les ports 8001 à 8003
-restent ouverts : `http://fhdeserable-v2.fr:8002` ou `http://<adresse-du-serveur>:8002`
-fonctionnent aussi.
-
-Fichiers concernés :
+- Les trois domaines pointent vers **la même adresse IP** : celle du serveur.
+- Seul le reverse proxy est joignable depuis le réseau, sur le **port 80**. Il lit le nom
+  de domaine demandé et transmet la visite au bon conteneur.
+- Les conteneurs des versions n'ont **aucun port ouvert** sur le serveur ; ils ne sont
+  joignables que par le proxy, sur le réseau Docker interne `fhd`.
+- Docker **ne crée aucune règle de pare-feu** : c'est le fichier nftables fourni qui
+  ouvre le port 80 au réseau de la maison.
 
 | Fichier | Rôle |
 |---|---|
-| `docker-compose.yml` | Lance les 3 sites (ports 8001-8003) et l'aiguilleur (port 80), redémarrage automatique |
-| `deploy/proxy.conf` | Configuration de l'aiguilleur : quel domaine va vers quel conteneur |
-| `deploy/versions.sh` | Prépare / met à jour le dossier `versions/` : une copie de chaque branche |
-| `Dockerfile` | Construit l'image d'une version : nginx + les pages, images, polices |
-| `deploy/nginx.conf.template` | Configuration du serveur web d'une version ; son domaine vient de la variable `DOMAINE` de `docker-compose.yml` |
-| `.dockerignore` | Exclut de l'image ce qui n'est pas le site (git, documentation…) |
+| `docker-compose.yml` | Les 3 conteneurs des versions + le reverse proxy, et le réseau interne `fhd` |
+| `deploy/proxy.conf` | Configuration du reverse proxy : quel domaine va vers quel conteneur |
+| `deploy/versions.sh` | Prépare / met à jour `versions/` : une copie de chaque branche |
+| `Dockerfile`, `deploy/nginx.conf` | Image et serveur web d'une version du site |
+| `deploy/daemon.json` | Configuration de Docker : ne plus toucher au pare-feu |
+| `deploy/nftables.conf` | Pare-feu du serveur (nftables uniquement) |
 
 ---
 
-## 1. Préparer le serveur
+## 1. Préparer le serveur (Linux)
 
-Le serveur peut être n'importe quel ordinateur qui reste allumé : un vieux PC, un
-Raspberry Pi, un NAS (Synology, QNAP…) compatible Docker.
-
-1. Installez Docker :
-   - Linux / Raspberry Pi : `curl -fsSL https://get.docker.com | sh`
-   - Windows ou macOS : [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-   - NAS : paquet « Container Manager » (Synology) ou « Container Station » (QNAP)
+1. Installez Docker et nftables :
+   ```bash
+   curl -fsSL https://get.docker.com | sh
+   sudo apt install nftables        # Debian / Ubuntu / Raspberry Pi OS
+   ```
 2. Récupérez le site :
    ```bash
    git clone https://github.com/TLZZ-okey/FHD-website.git
    cd FHD-website
    ```
 
-## 2. Lancer les sites
+## 2. Empêcher Docker de créer des règles iptables
+
+Par défaut, Docker écrit ses propres règles (dans iptables, qui apparaissent aussi dans
+nftables) au démarrage des conteneurs. On le lui interdit :
+
+```bash
+sudo cp deploy/daemon.json /etc/docker/daemon.json
+sudo systemctl restart docker
+```
+
+Contenu de `deploy/daemon.json` :
+
+| Réglage | Effet |
+|---|---|
+| `"iptables": false` | Docker ne crée plus aucune règle IPv4 |
+| `"ip6tables": false` | Idem pour IPv6 |
+| `"userland-proxy": true` | Le port 80 publié est servi par `docker-proxy`, un petit programme qui écoute directement sur le serveur : pas besoin de règle de redirection |
+
+> Si `/etc/docker/daemon.json` existe déjà, ajoutez-y ces trois lignes au lieu de le remplacer.
+
+Vérification : après le démarrage des conteneurs, `sudo nft list ruleset | grep "chain DOCKER"`
+ne doit rien afficher (Docker n'a créé aucune chaîne). Les mentions de `docker0` que vous
+verrez dans `nft list ruleset` viennent du pare-feu fourni, c'est normal.
+
+## 3. Installer le pare-feu nftables
+
+1. Ouvrez `deploy/nftables.conf` et adaptez le bloc « À adapter » :
+   - `RESEAU_LOCAL` : le réseau de votre maison (souvent `192.168.1.0/24`, ou
+     `192.168.0.0/24` ; vérifiez avec `ip a` : l'adresse du serveur et son `/24`) ;
+   - `PORT_SSH` : le port SSH du serveur, **pour ne pas perdre l'accès à distance**.
+2. Testez la syntaxe, puis installez et activez le pare-feu :
+   ```bash
+   sudo nft -c -f deploy/nftables.conf          # vérification, ne change rien
+   sudo cp deploy/nftables.conf /etc/nftables.conf
+   sudo systemctl enable --now nftables         # chargé maintenant et à chaque démarrage
+   sudo nft list ruleset                        # affiche les règles actives
+   ```
+
+Ce que fait ce pare-feu :
+
+| Règle | Pourquoi |
+|---|---|
+| Tout ce qui entre est refusé par défaut… | sécurité |
+| …sauf les réponses aux connexions déjà ouvertes | fonctionnement normal |
+| …le port **80** depuis `RESEAU_LOCAL` | accès aux sites depuis les appareils de la maison |
+| …le port SSH | administration du serveur |
+| …le ping | diagnostic |
+| Trafic entre conteneurs et vers Internet autorisé, avec masquage d'adresse (NAT) | le proxy joint les versions ; les conteneurs peuvent sortir |
+
+> **Ancien bazar de règles** : `flush ruleset` en tête du fichier efface les règles
+> nftables existantes, dont celles laissées par Docker. Si votre système utilise encore
+> l'ancien « iptables-legacy » (`iptables -V` affiche `legacy`), videz aussi ces règles
+> une fois : `sudo iptables -F; sudo iptables -t nat -F; sudo iptables -X; sudo iptables -t nat -X`,
+> ou redémarrez le serveur après l'étape 2.
+
+## 4. Lancer les sites
 
 ```bash
 ./deploy/versions.sh          # récupère les 3 versions dans versions/
-docker compose up -d --build  # construit et lance les 3 sites + l'aiguilleur
+docker compose up -d --build  # construit et lance les 3 versions + le reverse proxy
 ```
 
-Vérifiez sur le serveur lui-même : http://localhost:8001, http://localhost:8002 et
-http://localhost:8003 doivent afficher chacun leur version du site.
+Vérification sur le serveur lui-même :
+
+```bash
+curl -s -o /dev/null -w "%{http_code}\n" -H "Host: fhdeserable-v1.fr" http://localhost/   # 200
+curl -s -o /dev/null -w "%{http_code}\n" -H "Host: fhdeserable-v2.fr" http://localhost/   # 200
+curl -s -o /dev/null -w "%{http_code}\n" -H "Host: fhdeserable-v3.fr" http://localhost/   # 200
+```
 
 Commandes utiles :
 
 ```bash
-docker compose ps                    # les 4 conteneurs tournent-ils ?
-docker compose logs -f site-noir     # journaux d'un service (site-original, site-canadiens, site-noir, proxy)
-docker compose restart site-canadiens
-docker compose down                  # arrêter tous les sites
+docker compose ps                  # les 4 conteneurs tournent-ils ?
+docker compose logs -f proxy       # journaux du reverse proxy (ou site-v1, site-v2, site-v3)
+docker compose restart site-v2
+docker compose down                # tout arrêter
 ```
 
-Les conteneurs redémarrent tout seuls après une coupure ou un redémarrage du serveur
-(`restart: unless-stopped`).
+Les conteneurs redémarrent tout seuls après une coupure ou un redémarrage du serveur.
 
-> **Le port 80 est déjà pris sur votre serveur ?** (par exemple par l'interface d'un NAS)
-> `docker compose up` affichera « port is already allocated ». Deux solutions :
-> supprimez le bloc `proxy` de `docker-compose.yml` et utilisez les adresses avec le port
-> (`http://fhdeserable-v1.fr:8001`…), ou libérez le port 80 dans les réglages du NAS.
+## 5. Donner une adresse fixe au serveur
 
-## 3. Donner une adresse fixe au serveur
+Dans l'interface de la box, réservez l'adresse IP actuelle du serveur (« bail DHCP
+statique », « réservation d'adresse IP ») :
 
-Pour que les trois domaines pointent toujours au bon endroit, le serveur doit garder la
-même adresse IP sur le réseau.
+- Freebox : `mafreebox.freebox.fr` › Paramètres › DHCP › Baux statiques
+- Livebox : `192.168.1.1` › Réseau › DHCP › Adresses IP statiques
+- Bbox : `mabbox.bytel.fr` › Réseau local › DHCP
+- SFR Box : `192.168.1.1` › Réseau › DHCP
 
-1. Trouvez son adresse : `ip a` (Linux), `ipconfig` (Windows), ou la liste des
-   appareils connectés dans l'interface de votre box. Elle ressemble à `192.168.1.50`.
-2. Dans l'interface de la box, réservez cette adresse pour le serveur
-   (« bail DHCP statique », « réservation d'adresse IP » ou « IP fixe »).
-   - Freebox : `mafreebox.freebox.fr` › Paramètres › DHCP › Baux statiques
-   - Livebox : `192.168.1.1` › Réseau › DHCP › Adresses IP statiques
-   - Bbox : `mabbox.bytel.fr` › Réseau local › DHCP
-   - SFR Box : `192.168.1.1` › Réseau › DHCP
+## 6. Relier les trois noms de domaine au serveur
 
-Dès maintenant, les sites sont accessibles depuis n'importe quel appareil de la maison via
-`http://192.168.1.50:8001`, `:8002` et `:8003` (remplacez par l'adresse de votre serveur).
+Les six noms doivent pointer vers l'adresse IP du serveur (ici `192.168.1.50`).
 
-## 4. Relier les trois noms de domaine au serveur
-
-Les trois domaines (et leur variante `www.`) doivent tous pointer vers **la même adresse
-IP**, celle du serveur. Le choix du site se fait ensuite par l'aiguilleur.
-
-### Option A — Pour toute la maison d'un coup (recommandé)
-
-Ajoutez des entrées DNS locales, valables pour tous les appareils, y compris les
-téléphones et tablettes :
-
-- **Box compatible** (certaines Freebox, routeurs Asus, OpenWrt…) : cherchez
-  « DNS local », « noms d'hôtes » ou « hosts ».
-- **Pi-hole ou AdGuard Home** (si vous en avez un) : *Local DNS › DNS Records*
-  (Pi-hole) ou *Filtres › Réécritures DNS* (AdGuard).
-
-Entrées à créer (avec l'adresse de votre serveur) :
+**Pour toute la maison (recommandé)** — dans la box (« DNS local », « noms d'hôtes ») ou
+dans Pi-hole (*Local DNS › DNS Records*) / AdGuard Home (*Réécritures DNS*) :
 
 ```
-fhdeserable-v1.fr       → 192.168.1.50
-www.fhdeserable-v1.fr   → 192.168.1.50
-fhdeserable-v2.fr       → 192.168.1.50
-www.fhdeserable-v2.fr   → 192.168.1.50
-fhdeserable-v3.fr       → 192.168.1.50
-www.fhdeserable-v3.fr   → 192.168.1.50
+fhdeserable-v1.fr   www.fhdeserable-v1.fr   → 192.168.1.50
+fhdeserable-v2.fr   www.fhdeserable-v2.fr   → 192.168.1.50
+fhdeserable-v3.fr   www.fhdeserable-v3.fr   → 192.168.1.50
 ```
 
-### Option B — Appareil par appareil (ordinateurs uniquement)
-
-Ajoutez ces lignes au fichier `hosts` de chaque ordinateur :
+**Ou ordinateur par ordinateur** — dans le fichier `hosts`
+(Windows : `C:\Windows\System32\drivers\etc\hosts` ouvert en administrateur ;
+macOS / Linux : `sudo nano /etc/hosts`) :
 
 ```
 192.168.1.50   fhdeserable-v1.fr www.fhdeserable-v1.fr
@@ -135,53 +165,34 @@ Ajoutez ces lignes au fichier `hosts` de chaque ordinateur :
 192.168.1.50   fhdeserable-v3.fr www.fhdeserable-v3.fr
 ```
 
-- **Windows** : ouvrez le Bloc-notes *en tant qu'administrateur*, puis
-  `C:\Windows\System32\drivers\etc\hosts`
-- **macOS / Linux** : `sudo nano /etc/hosts`
-
-Les téléphones et tablettes ne permettent pas de modifier ce fichier : pour eux,
-utilisez l'option A ou l'adresse IP avec le port.
-
 Ensuite, ouvrez **http://fhdeserable-v1.fr**, **http://fhdeserable-v2.fr** ou
-**http://fhdeserable-v3.fr** dans un navigateur. Les adresses en `www.` redirigent
-automatiquement vers le domaine sans `www`.
+**http://fhdeserable-v3.fr** depuis n'importe quel appareil de la maison. Les adresses en
+`www.` redirigent vers le domaine sans `www`. Tapez bien `http://` : le HTTPS n'est pas
+configuré pour cet usage local.
 
-> **À savoir** : si vous n'êtes pas propriétaire de ces domaines, ce réglage ne vaut
-> qu'à la maison. Depuis l'extérieur, ils ne mèneront pas à votre serveur (ou mèneront
-> au site de leur vrai propriétaire, s'il en a un). Tapez bien `http://` au début :
-> certains navigateurs essaient d'abord `https://`, qui n'est pas configuré pour un
-> usage local.
+> Si vous n'êtes pas propriétaire de ces domaines, ces noms ne fonctionnent qu'à la maison.
 
-## 5. Mettre à jour les sites
-
-Après une modification envoyée sur GitHub (sur n'importe quelle branche) :
+## 7. Mettre à jour les sites
 
 ```bash
-git pull                      # met à jour docker-compose.yml, l'aiguilleur et le script
+git pull                      # met à jour docker-compose.yml, le proxy, le pare-feu…
 ./deploy/versions.sh          # récupère la dernière version de chaque branche
 docker compose up -d --build  # reconstruit les conteneurs qui ont changé
 ```
 
-## Changer un domaine, un port, ou ajouter une version
+## Dépannage
 
-- **Changer un nom de domaine** : modifiez la variable `DOMAINE` du service dans
-  `docker-compose.yml` **et** le `server_name` correspondant dans `deploy/proxy.conf`,
-  puis `docker compose up -d --build`.
-- **Changer un port** : modifiez le premier nombre de la ligne `"8001:80"` dans
-  `docker-compose.yml` (port du serveur), puis `docker compose up -d`.
-- **Ajouter une version** (une nouvelle branche) : ajoutez son nom à la ligne
-  `BRANCHES=` de `deploy/versions.sh`, un bloc de service dans `docker-compose.yml` sur le
-  modèle des autres (nouveau domaine, nouveau port 8004…), et un bloc `server` dans
-  `deploy/proxy.conf`.
+| Symptôme | Cause probable |
+|---|---|
+| Le site s'ouvre sur le serveur (`curl` ci-dessus) mais pas depuis un autre appareil | `RESEAU_LOCAL` ne correspond pas à votre réseau dans `/etc/nftables.conf`, ou le pare-feu n'est pas chargé (`sudo nft list ruleset`) |
+| « Port 80 is already allocated » | Un autre programme utilise le port 80 (interface d'un NAS, autre serveur web) : `sudo ss -ltnp 'sport = :80'` |
+| Erreur 404 « nginx » sur toutes les adresses | Le nom tapé n'est pas un des trois domaines, ou l'appareil ne résout pas le domaine vers le serveur (vérifiez l'étape 6) |
+| Le site ne charge pas du tout, pas même une erreur | Le domaine ne pointe pas vers le serveur : `ping fhdeserable-v1.fr` doit répondre avec l'adresse du serveur |
+| `docker compose up --build` échoue au téléchargement | Docker n'a plus accès à Internet : vérifiez la table `nat` du pare-feu (`sudo nft list table ip nat`) |
 
-## Pour aller plus loin : accès depuis Internet
+## Ajouter une version
 
-Si un jour vous achetez réellement ces domaines (chez OVH, Gandi…) et voulez que les
-sites soient visibles de l'extérieur, il faudra en plus :
-
-1. faire pointer chaque domaine vers l'adresse IP publique de votre box (enregistrement DNS `A`) ;
-2. ouvrir les ports 80 et 443 de la box vers le serveur (« redirection de ports ») ;
-3. ajouter des certificats HTTPS gratuits (Let's Encrypt), par exemple en remplaçant
-   l'aiguilleur par Caddy ou nginx-proxy-manager, qui savent les obtenir automatiquement.
-
-Ce n'est pas nécessaire pour un usage à la maison.
+1. Ajoutez la branche à la ligne `BRANCHES=` de `deploy/versions.sh`.
+2. Ajoutez un service `site-v4` dans `docker-compose.yml` sur le modèle des autres.
+3. Ajoutez dans `deploy/proxy.conf` les deux blocs `server` pour `fhdeserable-v4.fr`.
+4. Ajoutez le nom dans le DNS local (étape 6), puis `docker compose up -d --build`.

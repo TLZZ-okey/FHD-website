@@ -1,0 +1,124 @@
+/*
+ * Thème « Noir » : sobre et épuré.
+ * Fond noir, texte blanc, une seule couleur chaude (ambre) pour faire ressortir
+ * l'essentiel : nom de l'auteur, dates, prix, liens et éléments actifs.
+ * Les images gardent leurs couleurs, sauf le portrait de l'auteur, en noir et blanc.
+ * Ce fichier se charge après style.css et n'en surcharge que l'apparence.
+ */
+:root {
+  --noir: #0b0b0b;
+  --noir-2: #131313;
+  --noir-3: #1b1b1b;
+  --ambre: #e9a23b;
+  --ambre-clair: #f4bd62;
+
+  --papier: var(--noir);
+  --papier-2: var(--noir-2);
+  --encre: #f3f0ea;
+  --encre-douce: #a29d95;
+  --filet: #262626;
+  --accent: var(--ambre);
+  --blanc: var(--noir-2);   /* surfaces des cartes et pastilles */
+}
+
+html { color-scheme: dark; }
+body { background: var(--noir); color: var(--encre); }
+::selection { background: var(--ambre); color: var(--noir); }
+a { text-decoration-color: rgba(233,162,59,.5); }
+
+/* ---------- En-tête ---------- */
+.entete { background: rgba(11,11,11,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--filet); }
+.logo { color: var(--encre); font-weight: 500; }
+.logo span { color: var(--ambre); }
+.nav a { color: var(--encre-douce); }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--encre); border-color: var(--ambre); }
+@media (max-width: 720px) { .nav { background: var(--noir); } }
+
+/* ---------- Titres ---------- */
+.page-titre .surtitre { color: var(--ambre); }
+.page-titre h1 { font-weight: 400; letter-spacing: -.01em; }
+.page-titre p { color: var(--encre-douce); }
+.section-titre { border-bottom-color: var(--filet); }
+.section-titre h2 { font-weight: 400; }
+.lien-discret, .sommaire a { color: var(--ambre); }
+.compteur { color: var(--encre-douce); }
+
+/* ---------- Carrousel : images en couleur, sauf le portrait de l'auteur ---------- */
+.carrousel { background: #000; color: #fff; }
+.slide-fond[style*="portrait.jpg"] { filter: grayscale(1) contrast(1.05); }
+.slide-fond::after { background: linear-gradient(90deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.6) 45%, rgba(0,0,0,.15) 100%); }
+.slide-kicker { color: var(--ambre); opacity: 1; }
+.slide h2 { font-weight: 400; }
+.slide-prix { color: var(--ambre-clair); }
+.carrousel .bouton { border-color: var(--ambre); color: var(--ambre); }
+.carrousel .bouton:hover { background: var(--ambre); border-color: var(--ambre); color: var(--noir); }
+.carrousel-fleche { background: rgba(0,0,0,.4); border-color: rgba(255,255,255,.3); }
+.carrousel-fleche:hover { border-color: var(--ambre); color: var(--ambre); background: rgba(0,0,0,.6); }
+.carrousel-points button { background: rgba(255,255,255,.25); }
+.carrousel-points button[aria-current="true"] { background: var(--ambre); }
+.slide-rencontres li { background: rgba(0,0,0,.55); border-color: rgba(255,255,255,.14); }
+.sr-date b { color: var(--ambre); }
+.slide-vignette img { box-shadow: 0 30px 60px -20px rgba(0,0,0,.9); }
+@media (max-width: 720px) {
+  .slide-fond::after { background: linear-gradient(0deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.6) 60%, rgba(0,0,0,.35) 100%); }
+}
+
+/* ---------- Livres ---------- */
+.couverture { border-color: var(--filet); box-shadow: 0 18px 40px -18px rgba(0,0,0,.9); }
+.colonne-livres .carte-livre h3, .carte-livre h3 { color: var(--encre); font-weight: 500; }
+.colonne-livres .meta, .carte-livre .meta { color: var(--ambre); }
+.colonne-livres .carte-livre:hover h3 { color: var(--ambre); }
+.livre-detail { border-top-color: var(--filet); }
+.livre-detail .annee { color: var(--ambre); }
+.livre-detail h2 { font-weight: 400; }
+.livre-detail .sous-titre, .livre-detail .infos { color: var(--encre-douce); }
+.livre-detail .resume { color: #dcd8d1; }
+.prix-liste li { color: var(--ambre); }
+.prix-liste li::before, .biblio li::before, .badge { color: var(--ambre); }
+
+/* ---------- Citation ---------- */
+.bandeau { background: var(--noir-2); border-color: var(--filet); }
+.bandeau blockquote { color: var(--encre); }
+.bandeau blockquote::first-letter { color: var(--ambre); }
+.bandeau cite { color: var(--encre-douce); }
+
+/* ---------- Agenda ---------- */
+.ev-date { background: var(--noir-2); border-color: #333; }
+.ev-jour { color: var(--ambre); }
+.ev-mois { color: var(--encre-douce); }
+.ev-type { color: var(--ambre); }
+.evenement h3 a { color: var(--encre); }
+.evenement h3 a:hover { color: var(--ambre); }
+.ev-lieu { color: var(--encre-douce); }
+.evenement.passe { opacity: .45; }
+
+/* ---------- Biographie : portrait en noir et blanc ---------- */
+.portrait { background: #111; }
+.portrait img { filter: grayscale(1) contrast(1.05); }
+.portrait::after { background: linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,0) 45%); }
+.bio-texte p { color: #dcd8d1; }
+.bio-texte p.chapeau { color: var(--encre); }
+.bio-texte p:first-of-type::first-letter { color: var(--ambre); }
+.chrono { border-left-color: #333; }
+.chrono li::before { background: var(--noir); border-color: var(--ambre); }
+.chrono .an { color: var(--ambre); }
+
+/* ---------- Presse & publications ---------- */
+.article { border-color: var(--filet) !important; }
+.article .media { color: var(--encre); }
+.article .date, .article p { color: var(--encre-douce); }
+.article h2 a { color: var(--encre); }
+.article h2 a:hover { color: var(--ambre); }
+.article .livre-lie, .article .lire { color: var(--ambre); }
+.biblio li { border-bottom-color: var(--filet); }
+.biblio-titre { color: var(--encre); }
+.biblio-details { color: var(--encre-douce); }
+.biblio a { color: var(--ambre); }
+
+/* ---------- Pied de page ---------- */
+.pied { background: #000; border-top-color: var(--filet); color: var(--encre-douce); }
+.pied a:hover { color: var(--ambre); }
+
+/* Chiffres alignés (les chiffres « elzéviriens » de Cormorant se lisent mal dans les dates) */
+body { font-variant-numeric: lining-nums; }
+.portrait { color: #fff; }

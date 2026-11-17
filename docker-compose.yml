@@ -1,30 +1,54 @@
-# Trois serveurs web, un par version du site :
-#   http://<serveur>:8001  ->  version d'origine     (branche master)
-#   http://<serveur>:8002  ->  thème Canadiens       (branche theme-canadiens)
-#   http://<serveur>:8003  ->  thème Noir            (branche theme-noir)
+# Une version du site par conteneur, chacune sur son nom de domaine,
+# derrière un reverse proxy (seul conteneur exposé, sur le port 80 du serveur) :
 #
-# Les dossiers versions/* sont préparés (et mis à jour) par : ./deploy/versions.sh
+#   http://fhdeserable-v1.fr  ->  conteneur fhdeserable-v1  (branche master)
+#   http://fhdeserable-v2.fr  ->  conteneur fhdeserable-v2  (branche theme-canadiens)
+#   http://fhdeserable-v3.fr  ->  conteneur fhdeserable-v3  (branche theme-noir)
+#
+# Prérequis : ./deploy/versions.sh (prépare versions/*), deploy/daemon.json et
+# deploy/nftables.conf installés sur le serveur (voir DEPLOIEMENT.md).
+
 services:
-  site-original:
+  site-v1:
     build: ./versions/master
-    image: fhdeserable-original
-    container_name: fhdeserable-original
+    image: fhdeserable-v1
+    container_name: fhdeserable-v1
     restart: unless-stopped
-    ports:
-      - "8001:80"
+    networks: [fhd]
 
-  site-canadiens:
+  site-v2:
     build: ./versions/theme-canadiens
-    image: fhdeserable-canadiens
-    container_name: fhdeserable-canadiens
+    image: fhdeserable-v2
+    container_name: fhdeserable-v2
     restart: unless-stopped
-    ports:
-      - "8002:80"
+    networks: [fhd]
 
-  site-noir:
+  site-v3:
     build: ./versions/theme-noir
-    image: fhdeserable-noir
-    container_name: fhdeserable-noir
+    image: fhdeserable-v3
+    container_name: fhdeserable-v3
     restart: unless-stopped
+    networks: [fhd]
+
+  proxy:
+    image: nginx:1.27-alpine
+    container_name: fhdeserable-proxy
+    restart: unless-stopped
+    volumes:
+      - ./deploy/proxy.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - "8003:80"
+      - "80:80"
+    networks: [fhd]
+    depends_on: [site-v1, site-v2, site-v3]
+
+# Réseau interne aux noms fixes, pour que deploy/nftables.conf puisse le désigner :
+# interface « br-fhd », adresses 172.30.0.0/24.
+networks:
+  fhd:
+    name: fhd
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-fhd
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24

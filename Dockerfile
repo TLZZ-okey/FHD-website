@@ -1,7 +1,7 @@
 # Site vitrine François-Henri Désérable — serveur web nginx léger
 FROM nginx:1.27-alpine
 
-# Configuration du serveur (nom de domaine fhdeserable.fr)
+# Serveur web de cette version (les noms de domaine sont gérés par le reverse proxy)
 COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Fichiers du site

@@ -5,7 +5,11 @@
 #   http://fhdeserable-v2.fr  ->  conteneur fhdeserable-v2  (branche theme-canadiens)
 #   http://fhdeserable-v3.fr  ->  conteneur fhdeserable-v3  (branche theme-noir)
 #
-# Prérequis : ./deploy/versions.sh (prépare versions/*), deploy/daemon.json et
+# Le service « dns » est le serveur DNS de la maison : il répond aux trois domaines
+# avec l'adresse du serveur et transmet les autres noms à la Freebox (deploy/Corefile).
+#
+# Prérequis : ./deploy/versions.sh (prépare versions/*), deploy/reseau.env adapté,
+# deploy/daemon.json et
 # deploy/nftables.conf installés sur le serveur (voir DEPLOIEMENT.md).
 
 services:
@@ -40,6 +44,19 @@ services:
       - "80:80"
     networks: [fhd]
     depends_on: [site-v1, site-v2, site-v3]
+
+  # Serveur DNS de la maison (CoreDNS). Il utilise directement le réseau du serveur
+  # (network_mode: host) et écoute sur le port 53 de l'adresse IP_SERVEUR.
+  # Réglages : deploy/reseau.env ; noms gérés : deploy/Corefile.
+  dns:
+    image: coredns/coredns:1.11.3
+    container_name: fhdeserable-dns
+    restart: unless-stopped
+    network_mode: host
+    env_file: deploy/reseau.env
+    volumes:
+      - ./deploy/Corefile:/Corefile:ro
+    command: ["-conf", "/Corefile"]
 
 # Réseau interne aux noms fixes, pour que deploy/nftables.conf puisse le désigner :
 # interface « br-fhd », adresses 172.30.0.0/24.

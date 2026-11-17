@@ -1,0 +1,22 @@
+# Serveur DNS de la maison (CoreDNS), lancé par docker-compose.yml (service « dns »).
+# Les valeurs {$IP_SERVEUR} et {$DNS_AMONT} viennent de deploy/reseau.env.
+
+# 1) Les domaines des sites : CoreDNS répond lui-même avec l'adresse du serveur.
+fhdeserable-v1.fr fhdeserable-v2.fr fhdeserable-v3.fr {
+    bind {$IP_SERVEUR}
+    hosts {
+        {$IP_SERVEUR} fhdeserable-v1.fr www.fhdeserable-v1.fr
+        {$IP_SERVEUR} fhdeserable-v2.fr www.fhdeserable-v2.fr
+        {$IP_SERVEUR} fhdeserable-v3.fr www.fhdeserable-v3.fr
+    }
+    log
+    errors
+}
+
+# 2) Tous les autres noms (google.fr, etc.) : transmis au DNS de la Freebox.
+. {
+    bind {$IP_SERVEUR}
+    forward . {$DNS_AMONT}
+    cache 300
+    errors
+}
